@@ -1,0 +1,55 @@
+<container class="body_container_right">
+    <h1 style="margin-bottom:40px;">
+        새 글 추가
+    </h1>
+    <form action="/create_process" method="post" enctype="multipart/form-data">
+        <div class="create_title_div">
+            <div class="md-textbox">
+                <input oninput="handleChange(event)" id="input" type="text" name="create_title" maxlength="50">
+                <span class="material-symbols-outlined">account_circle</span>
+                <label htmlFor="input">제목을 입력하세요</label>
+            </div>
+            <container class="diary_category_radio_container">
+                <label for="diary_category">카테고리 선택:</label>
+                <input type="radio" id="diary_category" name="create_category" class="option-input checkbox" value="없음"
+                    checked>
+                <label for="없음">없음</label>
+
+                <input type="radio" id="diary_category" name="create_category" class="option-input checkbox" value="일기">
+                <label for="일기">일기</label>
+
+                <input type="radio" id="diary_category" name="create_category" class="option-input checkbox"
+                    value="설교말씀">
+                <label for="설교말씀">설교말씀</label>
+
+                <input type="radio" id="diary_category" name="create_category" class="option-input checkbox" value="공부">
+                <label for="공부">공부</label>
+            </container>
+            <!-- <select id="diary_category" name="create_category">
+                <option value="없음">없음</option>
+                <option value="설교 말씀">설교 말씀</option>
+                <option value="공부">공부</option>
+            </select> -->
+        </div>
+        <div id="message" style="color: red; text-align: right;"></div>
+        <div class="create_text_div">
+            <div class="md-textbox_textarea">
+                <textarea oninput="handleChange2(event)" id="input2" class="create_textarea" type="text"
+                    name="create_text" style="resize: none;"></textarea>
+                <label htmlFor="input2">글 내용을 입력하세요</label>
+            </div>
+        </div>
+
+        <div style="display: flex; justify-content: flex-start;">파일 업로드: <input type="file" name="create_fileupload"
+                value="파일 업로드"></div>
+
+        <div style="display:flex; justify-content: flex-end"><input type="submit" value="등록" class="modify_buttons"
+                style="color:whitesmoke;">
+            <button id="home_button" class="modify_buttons" style="margin-right:0;">
+                <a href="/" style="color:whitesmoke;">
+                    홈으로
+                </a>
+            </button>
+        </div>
+    </form>
+</container>

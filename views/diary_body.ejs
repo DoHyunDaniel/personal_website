@@ -1,0 +1,72 @@
+<body>
+    <script>
+        // data2는 서버에서 선언되고 클라이언트에 전달되는 변수라서 JSON으로 변수를 파싱해줘야 함
+        const data2 = <%- JSON.stringify(data2) %>;
+    </script>
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            if (data2[0].diary_date_updated != undefined) {
+                document.getElementById("diary_time_updated").style.display = "block";
+            }
+            if (data2[0].filename != null) {
+                document.getElementById("diary_image").style.display = "block";
+            }
+        });
+    </script>
+    <container class="body_container_right">
+        <button id="diary_category" class="btn btn-primary btn-round btn-marquee">
+            <span data-text="<%=data2[0].diary_category%>">
+                <%=data2[0].diary_category%>
+            </span>
+        </button>
+        <container id="diary_title_grid_container">
+
+            <div id="diary_title" class="diary_contents" style="--d: .1s;">
+                <p>
+                    <%= data2[0].diary_title %>
+                </p>
+            </div>
+            <div id="diary_viewCnt">
+                <p>조회수: <%= data2[0].viewCnt %>
+                </p>
+            </div>
+        </container>
+
+        <container id="diary_text_grid_container">
+            <div id="diary_textarea" style="--d: .5s;">
+                <container id="diary_time_grid_container" style="--d: .2s;">
+                    <div id="diary_time" class="diary_time">
+                        작성일: <%= year %>년 <%= month %>월 <%= day %>일 <%= hour %>시 <%= minute %>분
+                    </div>
+                    <div id="diary_time_updated" class="diary_time" style=" display:none; color:rgb(138, 134, 118)">
+                        수정일: <%= nyear %>년 <%= nmonth %>월 <%= nday %>일 <%= nhour %>시 <%= nminute %>분
+                    </div>
+                </container>
+                <img id="diary_image" class="diary_image" src="<%=imagePath%>" alt="My image" style="display:none; max-width: 100%;">
+                <p>
+                    <%- data2[0].diary_text.replace(/\n/g, '<br>' ) %>
+                </p>
+            </div>
+        </container>
+
+        <container id="buttons_container">
+            <div> </div>
+            <button class="modify_buttons"><a href="/create" style="color:whitesmoke">글쓰기</a></button>
+            <form action="delete_process" method="post">
+                <button type="submit" id="delete_button" class="modify_buttons" style="color:whitesmoke">
+                    <input type="hidden" name="diary_id" value=<%=data2[0].id%>>
+                    삭제
+                </button>
+            </form>
+            <button id="update_button" class="modify_buttons" style="color:whitesmoke">
+                <a href="/update_form?diary_id=<%=data2[0].id%>" style="color:whitesmoke">수정</a>
+            </button>
+            <button id="home_button" class="modify_buttons">
+                <a href="/" style="color:whitesmoke">
+                    홈으로
+                </a>
+            </button>
+        </container>
+
+    </container>
+</body>

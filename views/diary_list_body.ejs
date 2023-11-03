@@ -1,0 +1,100 @@
+<script>
+    // 숨김 처리하기
+    document.addEventListener("DOMContentLoaded", function () {
+
+        const currentPageNum = document.querySelectorAll(".pagination_container span");
+        const url = new URL(window.location.href);
+        const pageCategory = url.searchParams.get("category");
+
+        const currentPage = parseInt(url.searchParams.get("page")) || 1;
+
+        // 모든 링크 요소를 선택
+        const links = document.querySelectorAll(".diary_list_div a");
+        // 숨길 id 값을 설정
+        const idToHide = 19; // 숨길 id 값
+
+        links.forEach(link => {
+            // 각 링크의 href 속성에서 id 추출
+            const href = link.getAttribute("href");
+            const id = href.match(/diary_id=(\d+)/); // 정규 표현식을 사용하여 id 추출
+
+            if (id && parseInt(id[1]) === idToHide) {
+                // id가 숨길 id와 일치하면 숨깁니다.
+                link.style.display = "none";
+            }
+        });
+
+        fetch("/diary_list_endpoint")
+            .then((response) => response.json())
+            .then((data) => {
+                // 서버에서 받은 데이터를 사용할 수 있습니다.
+                const dataArray = data.rows;
+                const diaryListValue = dataArray.length;
+                alert(diaryListValue);
+                alert(dataArray);
+            })
+            .catch((error) => {
+                console.error("데이터 가져오기 실패:", error);
+            });
+
+
+        const divForNoValue = document.querySelector(".divForNoValue");
+        if (diaryListValue == null) {
+            divForNoValue.style.display = "block";
+        }
+        currentPageNum.forEach(span => {
+            const pageNum = parseInt(span.textContent);
+            if (pageNum === currentPage) {
+                span.style.fontWeight = "1000";
+                span.style.color = "#fc7878";
+            }
+        });
+    });
+</script>
+
+<container class="body_container_right">
+    <div class="divForNoValue" style="display: none; height:100%; width: 100%; text-align: center;">새 글을 작성해보세요!</div>
+    <h1>일기 게시판</h1>
+    <div class="category_selector">
+        <a href="/diary_list?category=전체보기"><button class="category_button" name="전체보기">전체보기</button></a>
+        <a href="/diary_list?category=없음"><button class="category_button" name="없음">없음</button></a>
+        <a href="/diary_list?category=일기"><button class="category_button" name="일기">일기</button></a>
+        <a href="/diary_list?category=공부"><button class="category_button" name="공부">공부</button></a>
+        <a href="/diary_list?category=설교말씀"><button class="category_button" name="설교말씀">설교말씀</button></a>
+    </div>
+    <div class="diary_list_div">
+        <div class="diary_list_div_titlearea">
+            <span>제목</span><span></span><span></span><span style="justify-self: end; margin-right:20px;">작성시간</span>
+        </div>
+        <% data4.forEach(item=> { %>
+            <ul>
+                <div><a href="/diary?diary_id=<%=item.id%>">
+                        <%= item.diary_category %> <button>
+                                <%= item.diary_title %>
+                            </button>
+                </div>
+                <div class="diary_list_body_date">
+                    <%= nyear %>년 <%= nmonth %>월 <%= nday %>일
+                </div></a>
+            </ul>
+
+            <!-- 반드시 SQL 쿼리에 전달된 id 값을 검증하고 SQL 인젝션을 방지하기 위해 적절한 대책을 취해야 합니다. 
+    사용자 입력을 직접 SQL 쿼리에 삽입하지 않도록 주의하세요. 
+    SQL 인젝션 공격을 방지하기 위해 diary_id를 안전하게 사용하는 방법을 사용해야 합니다.-->
+            <% }); %>
+    </div>
+    <div class="pagination_container">
+        <!-- 페이징 컨트롤을 표시할 곳 -->
+        <% if (curindex> 1) { %>
+            <a href="/diary_list?category=<%=category%>&page=<%= curindex - 1 %>"><span>이전</span></a>
+            <% } %>
+                <% for (let i=1; i <=Math.ceil(AllIndex / pageSize); i++) { %>
+                    <a href="/diary_list?category=<%=category%>&page=<%=i%>"><span id="pageNum">
+                            <%= i %>
+                        </span></a>
+                    <% } %>
+                        <% if (curindex < Math.ceil(AllIndex / pageSize)) { %>
+                            <a href="/diary_list?category=<%=category%>&page=<%= curindex + 1 %>"><span>다음</span></a>
+                            <% } %>
+    </div>
+</container>

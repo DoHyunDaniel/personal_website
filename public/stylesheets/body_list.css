@@ -1,0 +1,116 @@
+/* sidebar */
+
+.sidebar_container {
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+button {
+  background: transparent;
+  border: 0;
+  padding: 0;
+  cursor: pointer;
+  text-align: left;
+}
+
+.sidebar_div {
+  position: sticky;
+  top: 56px;
+}
+.sidebar {
+  z-index: 1;
+  width: 200px;
+  height: 120%;
+  background: #243052;
+  transition: width 0.4s;
+}
+
+.sidebar header {
+  display: flex;
+  align-items: center;
+  height: 56px;
+  padding: 0 1.25rem 0 0;
+  border-bottom: 1px solid rgb(255 255 255 / 12%);
+}
+
+.sidebar button {
+  position: relative;
+  display: flex;
+  gap: 16px;
+  align-items: center;
+  height: 50px;
+  width: 100%;
+  font-family: inherit;
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 1;
+  padding: 0 16px 0 25px;
+  color: #f7f7f7;
+  transition: 0.25s;
+  overflow-x: hidden;
+}
+
+.sidebar button.active,
+.subnav {
+  background: #2b395e;
+}
+
+.sidebar button:hover {
+  background: rgb(45, 60, 100);
+}
+
+.sidebar button span:nth-child(2) {
+  flex: 1 1 auto;
+}
+
+.sidebar button.active span:nth-child(3) {
+  rotate: -180deg;
+}
+
+.sub-nav button.active::before {
+  background: #f9f9f9;
+}
+
+.subnav {
+  position: relative;
+  overflow: hidden;
+  height: 0;
+  transition: 0.4s;
+}
+
+.subnav-inner {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+}
+.subnav-inner button {
+  margin-right: 5px;
+  max-width: auto;
+  white-space: nowrap; /* 텍스트가 한 줄로 나타나도록 설정 */
+  overflow: hidden; /* 넘친 텍스트를 숨기기 위한 설정 */
+  text-overflow: ellipsis; /* 넘친 텍스트를 '...'으로 표시 */
+}
+
+.subnav button {
+  padding-left: 64px;
+}
+
+.subnav button::before {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 36px;
+  translate: 0 -50%;
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background-color: rgb(255 255 255 / 40%);
+}
+
+.material-symbols-outlined {
+  font-size: 22px;
+  transition: 0.3s;
+}

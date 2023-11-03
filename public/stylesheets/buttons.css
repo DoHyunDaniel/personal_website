@@ -1,0 +1,318 @@
+.content{
+    margin: auto;
+    padding: 15px;
+    max-width: 800px;
+    text-align: center;
+  }
+  .dpx{
+    display:flex;
+    align-items:center;
+    justify-content:space-around;
+  }
+  h1{
+    font-size:28px;
+    line-height:28px;
+    margin-bottom:15px;
+  }
+  label{
+    display:block;
+    line-height:40px;
+  }
+  .option-input {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    -ms-appearance: none;
+    -o-appearance: none;
+    appearance: none;
+    position: relative;
+    top: 13.33333px;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    height: 40px;
+    width: 40px;
+    transition: all 0.15s ease-out 0s;
+    background: #cbd1d8;
+    border: none;
+    color: #fff;
+    cursor: pointer;
+    display: inline-block;
+    margin-right: 0.5rem;
+    outline: none;
+    position: relative;
+    z-index: 1;
+  }
+  .option-input:hover {
+    background: #9faab7;
+  }
+  .option-input:checked {
+    background: #40e0d0;
+  }
+  .option-input:checked::before {
+    width: 40px;
+    height: 40px;
+    display:flex;
+    content: '\f00c';
+    font-size: 25px;
+    font-weight:bold;
+    position: absolute;
+    align-items:center;
+    justify-content:center;
+    font-family:'Font Awesome 5 Free';
+  }
+  .option-input:checked::after {
+    -webkit-animation: click-wave 0.65s;
+    -moz-animation: click-wave 0.65s;
+    animation: click-wave 0.65s;
+    background: #40e0d0;
+    content: '';
+    display: block;
+    position: relative;
+    z-index: 100;
+  }
+  .option-input.radio {
+    border-radius: 50%;
+  }
+  .option-input.radio::after {
+    border-radius: 50%;
+  }
+  
+  @keyframes click-wave {
+    0% {
+      height: 40px;
+      width: 40px;
+      opacity: 0.35;
+      position: relative;
+    }
+    100% {
+      height: 200px;
+      width: 200px;
+      margin-left: -80px;
+      margin-top: -80px;
+      opacity: 0;
+    }
+  }
+
+  .modify_buttons {
+    align-self: center;
+    justify-self: end;
+    margin:10px 10px;
+  }
+  
+  /* Button Effect*/
+  
+  .btn {
+    font-family: "Sunflower", sans-serif;
+    width: 130px;
+    margin: 0.6rem;
+    background-color: #f76c6c;
+    border-radius: 25px;
+    color: rgb(255, 255, 255);
+    height: 40px;
+    box-shadow: 3px 3px 2px 2px rgb(154, 152, 152);
+  }
+  
+  .btn-marquee {
+    font-weight: 400;
+    border: none;
+    overflow: hidden;
+    transition: 0.3s;
+  }
+  .btn-marquee:hover {
+    transform: scale(1.1);
+  }
+  .btn-marquee span {
+    display: block;
+    padding: 0 20px;
+    -webkit-animation: move-left 2s linear infinite;
+    animation: move-left 2s linear infinite;
+  }
+  .btn-marquee span::after {
+    position: absolute;
+    content: attr(data-text);
+    top: 0;
+    left: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+  }
+  @-webkit-keyframes move-left {
+    to {
+      transform: translateX(-100%);
+    }
+  }
+  @keyframes move-left {
+    to {
+      transform: translateX(-100%);
+    }
+  }
+
+  .modify_buttons{
+    font-family: "Sunflower", sans-serif;
+    font-weight: 700;
+    font-size: 18px;
+    padding: 10px 20px; /* 버튼 내부 여백 설정 */
+    background-color: #f76c6c; /* 배경색 설정 */
+    border: none; /* 테두리 제거 */
+    border-radius: 20px; /* 모서리 둥글게 설정 */
+    cursor: pointer; /* 커서 스타일 변경 */
+}
+
+.modify_buttons:hover {
+    animation: shake 0.3s linear infinite both;
+    background-color: #fc7878; /* 호버 상태에서 배경색 변경 */
+  }
+  
+  @keyframes shake {
+    0% {
+      transform: translate(0);
+    }
+    20% {
+      transform: translate(-2px, 2px);
+    }
+    40% {
+      transform: translate(-2px, -2px);
+    }
+    60% {
+      transform: translate(2px, 2px);
+    }
+    80% {
+      transform: translate(2px, -2px);
+    }
+    100% {
+      transform: translate(0);
+    }
+  }
+  
+
+  .index_btn_title{
+    font-size: 16px;
+  }
+
+  .index_btn {
+    font-family: "Sunflower", sans-serif;
+    width: 60px;
+    margin: 0.6rem;
+    background-color: #f76c6c;
+    border-radius: 25px;
+    color: rgb(255, 255, 255);
+    height: 40px;
+    box-shadow: 3px 3px 2px 2px rgb(154, 152, 152);
+    text-align: center;
+  }
+  
+  .index_btn-marquee {
+    font-weight: 400;
+    border: none;
+    overflow: hidden;
+    transition: 0.3s;
+  }
+  .index_btn-marquee:hover {
+    transform: scale(1.1);
+  }
+  .index_btn-marquee span {
+    font-size: 16px;
+    display: block;
+    padding: 0 10px;
+    -webkit-animation: move-left 2s linear infinite;
+    animation: move-left 2s linear infinite;
+  }
+  .index_btn-marquee span::after {
+    position: absolute;
+    content: attr(data-text);
+    top: 0;
+    left: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+  }
+  @-webkit-keyframes move-left {
+    to {
+      transform: translateX(-100%);
+    }
+  }
+  @keyframes move-left {
+    to {
+      transform: translateX(-100%);
+    }
+  }
+
+  
+#footer_button_1st {
+  font-weight: 700;
+  font-size: 18px;
+  padding: 10px 20px; /* 버튼 내부 여백 설정 */
+  margin: 20px;
+  background-color: #f76c6c; /* 배경색 설정 */
+  border: none; /* 테두리 제거 */
+  border-radius: 20px; /* 모서리 둥글게 설정 */
+  cursor: pointer; /* 커서 스타일 변경 */
+}
+
+#footer_button_1st:hover {
+  animation: shake 0.3s linear infinite both;
+  background-color: #fc7878; /* 호버 상태에서 배경색 변경 */
+}
+
+@keyframes shake {
+  0% {
+    transform: translate(0);
+  }
+  20% {
+    transform: translate(-2px, 2px);
+  }
+  40% {
+    transform: translate(-2px, -2px);
+  }
+  60% {
+    transform: translate(2px, 2px);
+  }
+  80% {
+    transform: translate(2px, -2px);
+  }
+  100% {
+    transform: translate(0);
+  }
+}
+
+  
+  /* 버튼 타입들 */
+/*
+<div class='content'>
+<h1>Ripple animation on  input type radio and Checkbox</h1>
+<div class="dpx">
+<div class='px'>
+  <label>
+    <input type="checkbox" class="option-input checkbox" checked />
+    Checkbox
+  </label>
+  <label>
+    <input type="checkbox" class="option-input checkbox" />
+    Checkbox
+  </label>
+  <label>
+    <input type="checkbox" class="option-input checkbox" />
+    Checkbox
+  </label>
+</div>
+<div class='py'>
+  <label>
+    <input type="radio" class="option-input radio" name="example" checked />
+    Radio option
+  </label>
+  <label>
+    <input type="radio" class="option-input radio" name="example" />
+    Radio option
+  </label>
+  <label>
+    <input type="radio" class="option-input radio" name="example" />
+    Radio option
+  </label>
+</div>
+</div>
+</div>
+*/

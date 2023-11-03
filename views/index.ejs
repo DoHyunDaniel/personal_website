@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>
+    <%= title %>
+  </title>
+  <link rel='stylesheet' href='/stylesheets/layout.css' />
+  <link rel='stylesheet' href='/stylesheets/index_body.css' />
+  <link rel='stylesheet' href='/stylesheets/buttons.css' />
+  <!--웹폰트2-->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Sunflower:wght@300&display=swap" rel="stylesheet">
+
+
+</head>
+
+<%- include ('header') %>
+
+  <body>
+    <container id="body_layout_container">
+      <%- include ('body_list') %>
+        <%- include ('index_body') %>
+    </container>
+    <div id="buttons_container">
+      <button id="footer_button_1st"><a href="/create" style="color:whitesmoke">글쓰기</a></button>
+    </div>
+  </body>
+
+  <%- include ('footer') %>
+
+
+</html>

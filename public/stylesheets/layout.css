@@ -1,0 +1,60 @@
+html {
+  width: 100%;
+  height: 100%;
+}
+
+body {
+  font-family: "Sunflower", sans-serif;
+  /* background-image:url(/images/background_image4.png); */
+  background-color: #f8e9a1;
+  background-size: cover; /* 이미지가 화면에 꽉 차도록 조절 */
+  background-repeat: no-repeat; /* 이미지 반복 없음 */
+  width: 100%;
+  margin: 0;
+  height: 100%;
+}
+
+#body_layout_container {
+  display: flex;
+}
+
+.body_container_right {
+  margin-right: 20px;
+  padding-top: 10px;
+  padding-right: 20px;
+  padding-left: 20px;
+  width: 100%;
+}
+
+#footer_1st {
+  text-align: right;
+}
+
+#diary_contents {
+  margin-top: 10px;
+  margin-bottom: 30px;
+  font-size: 1.4rem;
+  font-weight: 700;
+}
+li {
+  font-family: "Sunflower", sans-serif;
+  font-size: 14px;
+  width: 150px;
+  margin-bottom: 10px;
+}
+
+/* 드롭다운 내용 초기 숨김 */
+.dropdown-content {
+  display: block;
+}
+
+/* 드롭다운 열기 스타일 */
+.dropdown-open .dropdown-content {
+  display: none;
+}
+#buttons_container {
+  display: flex;
+  justify-content: flex-end;
+  padding-right: 20px;
+  
+}

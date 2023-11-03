@@ -1,0 +1,104 @@
+.md-textbox {
+    margin-top:20px;
+    margin-bottom:20px;
+    position: relative;
+    font-family:'Sunflower',sans-serif ;
+  }
+  
+  .md-textbox :is(label, span) {
+    position: absolute;
+    top: 50%;
+    translate: 0 -50%;
+    pointer-events: none;
+    color: #888888;
+    transition: 0.3s;
+  }
+  
+  .md-textbox > label {
+    left: 10px;
+    translate: 0 -50%;
+    padding: 4px 8px;
+  }
+  
+  .md-textbox > span {
+    right: 16px;
+    font-size: 28px;
+  }
+  
+  .md-textbox > input {
+    height: 56px;
+    width: 100%;
+    padding-left: 16px;
+    border: 2px solid #888888;
+    border-radius: 8px;
+    outline: none;
+    background: transparent;
+    color: #000000;
+    font-family: inherit;
+    font-size: 16px;
+  }
+  
+  .md-textbox > :is(input:focus, .has-value) {
+    border-color: #8f44fd;
+  }
+  
+  .md-textbox > :is(input:focus, .has-value) ~ span {
+    color: #f9f9f9;
+  }
+  
+  .md-textbox > :is(input:focus, .has-value) ~ label {
+    background: #f8e9a1;
+    color: rgba(0, 0, 0, 0.75);
+    translate: 0 -56px;
+  }
+
+
+.create_textarea{
+padding-top:10px;
+}
+
+  .md-textbox_textarea {
+    margin: 40px auto 20px auto;
+    position: relative;
+    font-family:'Sunflower',sans-serif ;
+  }
+
+  .md-textbox_textarea :is(label, span) {
+    position: absolute;
+    top: 4%;
+    translate: 0 -30%;
+    pointer-events: none;
+    color: #888888;
+    transition: 0.3s;
+  }
+  
+  .md-textbox_textarea > label {
+    left: 10px;
+    translate: 0 -30%;
+    padding: 4px 8px;
+  }
+  
+
+
+  .md-textbox_textarea > textarea {
+    height: 400px;
+    width: 100%;
+    padding-left: 16px;
+    border: 2px solid #888888;
+    border-radius: 8px;
+    outline: none;
+    background: transparent;
+    color: #000000;
+    font-family: inherit;
+    font-size: 16px;
+  }
+  
+  .md-textbox_textarea > :is(textarea:focus, .has-value) {
+    border-color: #8f44fd;
+  }
+  
+  .md-textbox_textarea > :is(textarea:focus, .has-value) ~ label {
+    background: #f8e9a1;
+    color: rgba(0, 0, 0, 0.75);
+    translate: 0 -54px;
+  }

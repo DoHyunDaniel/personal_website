@@ -1,0 +1,135 @@
+<head>
+    <title>
+        <%= title %>
+    </title>
+    <!--모달 창-->
+    <link rel='stylesheet' href='/stylesheets/login/modal.css' />
+
+    <link rel="preload" as="style" href="/stylesheets/header.css" onload="this.rel='stylesheet'">
+    <!-- 웹폰트 1-->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Jua&display=swap" rel="stylesheet">
+    <!-- 웹폰트 2-->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Sunflower:wght@300&display=swap" rel="stylesheet">
+    <!--구글 아이콘-->
+    <link rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0" />
+
+</head>
+
+<body>
+    <header>
+
+        <nav id="header_nav">
+            <div style="font-weight: 900;">공지사항</div>
+            <div class="scrollable-div">
+                <div id="welcome-message"></div>
+                <div class="scrolling-text">
+                    <%= notice %>
+                </div>
+            </div>
+            <div class="login_div">
+                <button id="one" class="button"> <span class="material-symbols-outlined"
+                        style="margin-left:10px;width: 30px;">
+                        login
+                    </span></button>
+                <button id="logout"><span class="material-symbols-outlined" style="width: 30px;">
+                        logout
+                    </span></button>
+            </div>
+        </nav>
+
+        <container id="header_container">
+            <%- include ('./login/modal') %>
+                <div id="title" class="title">
+                    <h1>
+                        <a href="/">
+                            <span>D</span>
+                            <span>a</span>
+                            <span>n</span>
+                            <span>i</span>
+                            <span>e</span>
+                            <span>l</span>
+                            <span>'</span>
+                            <span>s</span>
+                            <span>B</span>
+                            <span>l</span>
+                            <span>o</span>
+                            <span>g</span>
+                        </a>
+                    </h1>
+                </div>
+                <div id="title_small" style="--d: 1s;">
+                    Strive to enter through the narrow door<br>
+                    <div style="font-size: 12px; color:black">Created by HTML5/CSS/JavaScript, Node.js, Express.js</div>
+                </div>
+
+        </container>
+    </header>
+
+
+</body>
+
+
+<!-- 로그아웃 -->
+<script>$('#logout').click(function () {
+
+        // 버튼을 비활성화하여 중복 클릭 방지
+        $('#login').prop('disabled', true);
+
+        // get 요청을 보내고 응답을 처리
+        $.get("/users/logout", function (data) {
+            // 서버로부터 받은 JSON 응답에서 메시지를 추출
+            const Message = data.message;
+            const modal2 = $('<div class="modal2" style="left:40vw;"><div>');
+            modal2.text(Message);
+            // 확인 버튼을 추가
+            const closeButton = $('<button>OK</button></div></div>');
+            closeButton.click(function () {
+                modal2.remove(); // 모달 창 닫기
+                window.location.reload();
+                $('#login').prop('disabled', false);
+            });
+            modal2.append(closeButton);
+
+            // 모달 창을 body에 추가
+            $('html').append(modal2);
+
+        });
+
+    });
+</script>
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        $.get("/api/getSessionUser", function (data) {
+            if (data.user && data.user === "admin") {
+                // 세션 정보가 있는 경우
+                const user = data.user;
+                const welcomeMessage = document.getElementById('welcome-message');
+                welcomeMessage.textContent = `Welcome, ${user}`;
+                welcomeMessage.style = "background-color:#243052; z-index:100; padding-right:10px; position:fixed;"
+
+                const writeButtons = document.getElementById('buttons_container');
+                writeButtons.style.display = "flex";
+            } else if (data.user && data.user !== "admin") {
+                const user = data.user;
+                const welcomeMessage = document.getElementById('welcome-message');
+                welcomeMessage.textContent = `Welcome, ${user}`;
+                welcomeMessage.style = "background-color:#243052; z-index:100; padding-right:10px; position:fixed;"
+
+                const writeButtons = document.getElementById('buttons_container');
+                writeButtons.style.display = "none";
+            } else {
+                // 세션 정보가 없는 경우 (비로그인 상태)
+                const welcomeMessage = document.getElementById('welcome-message');
+                welcomeMessage.textContent = `Please login`;
+                welcomeMessage.style = "background-color:#243052; z-index:100; padding-right:10px; position:fixed;"
+
+                const writeButtons = document.getElementById('buttons_container');
+                writeButtons.style.display = "none";
+            }
+        })
+    })</script>

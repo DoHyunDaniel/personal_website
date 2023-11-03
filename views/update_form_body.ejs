@@ -1,0 +1,54 @@
+<container class="body_container_right">
+    <h1 style="margin-bottom:40px;">
+        새 글 추가
+    </h1>
+    <form action="/update_process" method="post" enctype="multipart/form-data">
+        <div class="create_title_div">
+            <div class="md-textbox">
+                <input oninput="handleChange(event)" id="input" type="text" name="update_title"
+                    value="<%=data2[0].diary_title%>" maxlength="50">
+                <span class="material-symbols-outlined">account_circle</span>
+
+            </div>
+            <container class="diary_category_radio_container">
+                <label for="diary_category">카테고리 선택:</label>
+                <input type="radio" id="diary_category" name="update_category" class="option-input checkbox" value="없음"
+                    checked>
+                <label for="없음">없음</label>
+
+                <input type="radio" id="diary_category" name="update_category" class="option-input checkbox" value="일기">
+                <label for="일기">일기</label>
+
+                <input type="radio" id="diary_category" name="update_category" class="option-input checkbox"
+                    value="설교말씀">
+                <label for="설교말씀">설교말씀</label>
+
+                <input type="radio" id="diary_category" name="update_category" class="option-input checkbox" value="공부">
+                <label for="공부">공부</label>
+            </container>
+        </div>
+        <div id="message" style="color: red; text-align: right;"></div>
+        <div class="create_text_div">
+            <div class="md-textbox_textarea">
+                <textarea oninput="handleChange2(event)" id="input2" class="update_textarea" type="text"
+                    name="update_textarea" style="resize: none;"><%- data2[0].diary_text%></textarea>
+            </div>
+        </div>
+        <input type="hidden" name="update_id" value="<%=data2[0].id%>">
+
+        <div style="display: flex; justify-content: flex-start;">파일 업로드: <input type="file" name="create_fileupload"
+                value="파일 업로드">
+                <input type="hidden" name="update_filename" value="<%= data2[0].filename %>">
+                <input type="hidden" name="update_filepath" value="<%= data2[0].filepath %>">
+        </div>
+
+        <div style="display:flex; justify-content: flex-end"><input type="submit" value="등록" class="modify_buttons"
+                style="color:whitesmoke;">
+            <button id="home_button" class="modify_buttons" style="margin-right:0;">
+                <a href="/" style="color:whitesmoke;">
+                    홈으로
+                </a>
+            </button>
+        </div>
+    </form>
+</container>

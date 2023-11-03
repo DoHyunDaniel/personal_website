@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>
+        <%= title %>
+    </title>
+    <link rel='stylesheet' href='/stylesheets/diary.css' />
+    <link rel='stylesheet' href='/stylesheets/layout.css' />
+
+    <!-- 웹폰트 2-->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Sunflower:wght@300&display=swap" rel="stylesheet">
+
+</head>
+
+<%- include ('header') %>
+
+    <body>
+        <container id="body_layout_container">
+            <%- include ('body_list') %>
+                <%- include ('diary_body') %>
+        </container>
+    </body>
+    <%- include ('footer2') %>
+
+</html>

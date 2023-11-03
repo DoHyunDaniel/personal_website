@@ -1,0 +1,39 @@
+<container class="body_container_right">
+    <container id="index_diary_list_container">
+        <div class="diary_list_div">
+            <h2>Most Viewed</h2>
+            <% data2.forEach(item=> { %>
+                <ul>
+                    <div><a href="/diary?diary_id=<%=item.id%>">
+                            <button class="index_btn index_btn-round index_btn-marquee">
+                                <span data-text=" <%= item.diary_category %>">
+                                    <%= item.diary_category %>
+                                </span>
+                            </button><button class="index_btn_title">
+                                <%= item.diary_title %>
+                            </button>
+                    </a></div>
+
+                </ul>
+                <% }); %>
+        </div>
+
+        <div class="diary_list_div">
+            <h2>Recent</h2>
+            <% data3.forEach(item=> { %>
+                <ul>
+                    <div id="index_body_titles"><a href="/diary?diary_id=<%=item.id%>">
+                            <button class="index_btn index_btn-round index_btn-marquee">
+                                <span data-text=" <%= item.diary_category %>">
+                                    <%= item.diary_category %>
+                                </span>
+
+                            </button><button class="index_btn_title">
+                                <%= item.diary_title %>
+                            </button></a>
+                    </div>
+                </ul>
+                <% }); %>
+        </div>
+    </container>
+</container>

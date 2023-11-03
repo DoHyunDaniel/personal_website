@@ -1,0 +1,70 @@
+button{
+  font-family: "Sunflower", sans-serif;
+}
+
+ul{
+  border-top: 1px solid #ffffff;
+  border-bottom: 1px solid #ffffff;
+  margin-top:-17px;
+}
+
+ul button{
+  margin:30px;
+  font-size: 18px;
+}
+
+.diary_list_div{
+  width: 100%;
+  margin-top:40px;
+  margin-bottom:20px;
+}
+
+.diary_list_div ul{
+  
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  align-items: center;
+}
+
+.pagination_container{
+  display: flex;
+  width: 100%;
+  align-items: center;
+  justify-content: center;
+}
+
+.pagination_container span{
+  margin: 20px;
+}
+
+.diary_list_div_titlearea{
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+  margin-bottom:40px;
+  align-items: center;
+  justify-items: center;
+  font-size: 18px;
+  font-weight:700;
+}
+.diary_list_body_date{
+  padding-right:20px;
+  text-align: right;
+}
+
+.category_selector{
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+  justify-items: center;
+  align-items: center;
+}
+
+.category_selector button{
+  text-align: center;
+  width:6rem;
+  height:3rem;
+  background-color: coral;
+  border-radius: 20px;
+  font-size: 16px;
+  color: white;
+  font-weight: 700;
+}

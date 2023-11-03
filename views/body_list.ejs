@@ -1,0 +1,75 @@
+<head>
+    <title>
+        <%= title %>
+    </title>
+    <link rel='stylesheet' href='/stylesheets/layout.css' />
+    <link rel='stylesheet' href='/stylesheets/body_list.css' />
+    <!--웹폰트2-->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Sunflower:wght@300&display=swap" rel="stylesheet">
+    <!-- 추가 링크 -->
+    <link rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,600,1,0" />
+
+
+</head>
+<!-- sidebar -->
+<container class="sidebar_container">
+    <aside class="sidebar" id="resizable">
+        <div class="sidebar_div">
+            <a href="/"><button>
+                    <span class="material-symbols-outlined">home </span>
+                    <span>Home</span>
+                </button></a>
+            <button onclick="handleHeaderClicked('tools')">
+                <span class="material-symbols-outlined"> quick_reference_all </span>
+                <span>Boards</span>
+                <span class="material-symbols-outlined"> expand_more </span>
+            </button>
+            <div id="tools" class="subnav">
+                <div class="subnav-inner">
+                    <a href="/diary_list?category=전체보기"><button>Diary</button></a>
+                    <a href="/about_me"> <button>
+                            <span>About Me</span>
+                        </button></a>
+                    <a href="/visitors_book"> <button>
+                            <span>Visitor's Book</span>
+                        </button></a>
+                </div>
+            </div>
+            <!-- <button onclick="handleHeaderClicked('settings')">
+                <span class="material-symbols-outlined"> settings </span>
+                <span>Settings</span>
+                <span class="material-symbols-outlined"> expand_more </span>
+            </button>
+            <div id="settings" class="subnav">
+                <div class="subnav-inner">
+                    <button>
+                        <span>Display</span>
+                    </button>
+                    <button>
+                        <span>Audio</span>
+                    </button>
+                    <button>
+                        <span>Interface</span>
+                    </button>
+                    <button>
+                        <span>Accessibility</span>
+                    </button>
+                </div>
+            </div> -->
+            <button>
+                <span class="material-symbols-outlined"> account_circle </span>
+                <span>Profile</span>
+            </button>
+            <button>
+                <span class="material-symbols-outlined"> logout </span>
+                <span>Sign Out</span>
+            </button>
+        </div>
+    </aside>
+</container>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+<script src="/javascripts/body_list.js"></script>

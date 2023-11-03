@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>
+        <%= title %>
+    </title>
+    <link rel='stylesheet' href='/stylesheets/create_form.css' />
+    <link rel='stylesheet' href='/stylesheets/layout.css' />
+    <!-- <link rel='stylesheet' href='/stylesheets/controls.css' /> -->
+    <!-- <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0"
+    /> -->
+</head>
+
+<%- include ('header') %>
+
+    <body>
+        <container id="body_layout_container">
+            <%- include ('body_list') %>
+                <container>
+                    <h1>
+                        글 수정
+                    </h1>
+                    <form action="/update_process_for_admin" method="post">
+                        <h2>제목</h2>
+                        <p><input id="create_title" type="text" name="update_title"
+                                value="<%=data2[0].diary_title%>"></input>
+                        </p>
+                        <label for="diary_category">카테고리 선택:</label>
+                        <select id="diary_category" name="update_category">
+                            <option value="없음">없음</option>
+                            <option value="설교 말씀">설교 말씀</option>
+                            <option value="공부">공부</option>
+                        </select>
+                        <h2>내용<h2></h2>
+                            <p><textarea id="create_text" type="text"
+                                    name="update_text"><%- data2[0].diary_text%></textarea></p>
+                            <h2> 공지사항</h2>
+                            <p><textarea id="create_text" type="text"
+                                    name="notice"><%- data2[0].notice%></textarea>
+                            </p>
+
+                            <p><input type="submit" value="등록"></p>
+                            <input type="hidden" name="update_id" value="<%=data2[0].id%>">
+                    </form>
+                </container>
+        </container>
+
+        <a href="/">
+            <p>home</p>
+        </a>
+    </body>
+    <!-- <script src="/javascripts/controls.js"></script> -->
+
+</html>
