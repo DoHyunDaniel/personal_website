@@ -1,0 +1,112 @@
+<container class="body_container_right">
+    <h1 style="margin-bottom:40px; text-align: center;">
+        PROFILE UPDATE
+    </h1>
+    <form action="/profile_update_process" method="post" id="profileUpdateProcess">
+        <div class="create_title_div" style="display: flex; flex-direction:column; align-items: center;">
+            <img src="./images/default_avatar.png" style="border-radius: 100%;">
+            <div class="md-textbox" style="width:70%;">
+                <input oninput="handleChange(event)" id="input" type="text" name="update_profile_id" maxlength="50"
+                    value="<%=id%>" style="user-select: none;" readonly>
+                <span class="material-symbols-outlined">account_circle</span>
+
+            </div>
+
+
+            <div class="md-textbox" style="width:70%;">
+                <input oninput="handleChange(event)" id="inputPassword" type="password" name="update_profile_password"
+                    maxlength="255" value="<%=password%>">
+                <span class="material-symbols-outlined">password</span>
+            </div>
+            <div class="md-textbox" style="width:70%;" id="inputPasswordAgainDiv">
+                <input oninput="handleChange(event)" id="inputPasswordAgain" type="password" maxlength="255"
+                    placeholder="Type your password again">
+                <span class="material-symbols-outlined">password</span>
+            </div>
+
+            <div class="md-textbox" style="width:70%;">
+                <input oninput="handleChange(event)" id="input" type="text" name="update_profile_email" maxlength="100"
+                    value="<%=email%>">
+                <span class="material-symbols-outlined">mail</span>
+            </div>
+        </div>
+
+        <div style="display:flex; justify-content: flex-end"><a href="/profile_update"><button class="modify_buttons"
+                    type="submit" style="color:whitesmoke;">프로필 수정</button></a>
+            <button id="home_button" class="modify_buttons" style="margin-right:0;">
+                <a href="/" style="color:whitesmoke;">
+                    홈으로
+                </a>
+            </button>
+        </div>
+    </form>
+</container>
+<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+<script>
+    // JavaScript 코드
+    var inputPasswordAgain = document.getElementById("inputPasswordAgain");
+
+    inputPasswordAgain.addEventListener("focus", function () {
+        inputPasswordAgain.style.color = "black";
+    });
+</script>
+<script>
+    window.onload = function () {
+        // 세션 상태 저장
+        sessionStorage.setItem('loggedIn', 'true');
+        // 세션 상태 확인
+        const isLoggedIn = sessionStorage.getItem('loggedIn');
+        if (isLoggedIn !== 'true') {
+            alert('Please login again.');
+            window.location.replace("/");
+        }
+    }
+</script>
+
+<script>
+    document.getElementById("profileUpdateProcess").addEventListener("submit", function (event) {
+
+        // 첫 번째 패스워드 필드 값
+        var password1 = document.getElementById('inputPassword').value;
+
+        // 두 번째 패스워드 필드 값
+        var password2 = document.getElementById('inputPasswordAgain').value;
+
+        // 패스워드 일치 여부 확인
+        if (password1 === password2) {
+            event.preventDefault();
+            var Message = "Your infos are successfully changed."
+            const modal2 = $('<div class="modal2" style="left:40vw;"><div>');
+            modal2.text(Message);
+            // 확인 버튼을 추가
+            const closeButton = $('<button>OK</button></div></div>');
+            closeButton.click(function () {
+                var form = document.getElementById("profileUpdateProcess");
+                form.submit();
+                $.get("/users/logout");
+                modal2.remove(); // 모달 창 닫기
+                // window.location.replace("/");
+            });
+            modal2.append(closeButton);
+
+            // 모달 창을 body에 추가
+            $('body').append(modal2);
+        } else {
+            // 불일치할 때의 처리
+            event.preventDefault();
+            var Message = "Please check your passwords again."
+            const modal2 = $('<div class="modal2" style="left:40vw;"><div>');
+            modal2.text(Message);
+            // 확인 버튼을 추가
+            const closeButton = $('<button>OK</button></div></div>');
+            closeButton.click(function () {
+                modal2.remove(); // 모달 창 닫기
+            });
+            modal2.append(closeButton);
+
+            // 모달 창을 body에 추가
+            $('body').append(modal2);
+            document.getElementById("inputPasswordAgain").style.color = "red";
+        }
+    });
+</script>

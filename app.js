@@ -6,6 +6,8 @@ var cookieParser = require("cookie-parser");
 var bodyParser = require("body-parser");
 var expressSession = require("express-session");
 var logger = require("morgan");
+const bcrypt = require("bcrypt");
+const saltRounds = 10; // 솔트 라운드 수
 
 var indexRouter = require("./routes/index");
 var usersRouter = require("./routes/users");
@@ -59,7 +61,7 @@ app.use(
     secret: "keyboard cat",
     resave: false,
     saveUninitialized: true,
-    cookie: { maxAge : 18000000/*secure: true*/ }
+    cookie: { maxAge: 18000000 /*secure: true*/ },
   })
 );
 
@@ -72,76 +74,89 @@ app.get("/users/login_process", (req, res) => {
   }
 });
 
-app.post("/users/login_process", (req, res) => {
-  console.log("로그인 함수가 실행됩니다.");
+/* 로그인 */
 
+app.post("/users/login_process", (req, res) => {
   const { username, password } = req.body;
-  console.log(username);
-  console.log(password);
-  const query = `SELECT * FROM users WHERE username = '${username}' AND password = '${password}';`;
+
+  // 데이터베이스에서 해당 사용자의 해시된 비밀번호를 가져옵니다.
+  const query = `SELECT * FROM users WHERE username = '${username}';`;
   connection.query(query, (err, rows) => {
     if (err) {
-      const failMessage = "An error occured transporting information.";
+      const failMessage =
+        "An error occurred while retrieving user information.";
       res.json({ message: failMessage, login: false });
-      console.log(failMessage);
+
       throw err;
     } else if (req.session.user) {
-      // 세션에 유저가 존재한다면
-      const failMessage = "You have been already logged in.";
-      console.log("이미 로그인 돼있습니다~");
+      // 세션에 사용자가 이미 로그인한 경우
+      const failMessage = "You are already logged in.";
+
       res.json({ message: failMessage, login: false });
     } else if (rows.length === 0) {
-      const failMessage = "There's no user data.";
+      // 사용자 정보를 찾을 수 없는 경우
+      const failMessage = "User not found.";
       res.json({ message: failMessage, login: false });
-      console.log(failMessage);
     } else {
-      const successMessage = "Login success";
-      console.log(username)
-      req.session.user = {
-        id: username,
-        pw: password,
-        email: rows[0].email,
-        authorized: true,
-      };
-      console.log(req.session.user)
-      res.json({
-        message: successMessage,
-        data: req.session.user,
-        login: true,
+      // 데이터베이스에서 가져온 해시된 비밀번호
+      const storedHashedPassword = rows[0].password;
+      const email = rows[0].email;
+      // 저장된 해시된 비밀번호와 사용자가 입력한 비밀번호를 비교
+      bcrypt.compare(password, storedHashedPassword, (err, result) => {
+        if (err) {
+          const failMessage = "An error occurred during password comparison.";
+          res.json({ message: failMessage, login: false });
+        } else if (result) {
+          // 비밀번호 일치
+          const successMessage = "Login success";
+          req.session.user = {
+            id: username,
+            password: storedHashedPassword,
+            email: email, // 또는 원하는 기타 사용자 정보
+            authorized: true,
+          };
+
+          res.json({
+            message: successMessage,
+            data: req.session.user,
+            login: true,
+          });
+        } else {
+          // 비밀번호 불일치
+          const failMessage = "Incorrect password.";
+          res.json({ message: failMessage, login: false });
+        }
       });
     }
   });
 });
 
+/* 로그아웃 */
+
 app.get("/users/logout", (req, res) => {
-  console.log("로그아웃");
   if (req.session.user) {
-    console.log("로그아웃중입니다!");
     req.session.destroy((err) => {
       if (err) {
-        const failMessage = "Error occured deleting session."
-        console.log("세션 삭제시에 에러가 발생했습니다.");
-        res.json({message:failMessage})
+        const failMessage = "Error occured deleting session.";
+
+        res.json({ message: failMessage });
         return;
       }
-      console.log("세션이 삭제됐습니다.");
-      const successMessage ="Logout Success.";
-      res.json({message:successMessage});
+
+      const successMessage = "Logout Success.";
+      res.json({ message: successMessage });
     });
   } else {
-    console.log("로그인해 주세요.");
     const failMessage = "You need to login.";
-    res.json({message:failMessage})
+    res.json({ message: failMessage });
     res.redirect("/login/modal");
   }
 });
 
-
-app.get('/api/getSessionUser', (req, res) => {
+app.get("/api/getSessionUser", (req, res) => {
   if (req.session.user) {
     // 세션에 사용자 정보가 있는 경우
     const user = req.session.user.id;
-    console.log("api based user data is : "+user);
     res.json({ user });
   } else {
     // 세션에 사용자 정보가 없는 경우

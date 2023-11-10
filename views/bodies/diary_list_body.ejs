@@ -28,10 +28,10 @@
             .then((response) => response.json())
             .then((data) => {
                 // 서버에서 받은 데이터를 사용할 수 있습니다.
-                const dataArray = data.rows;
+                const dataArray = rows;
                 const diaryListValue = dataArray.length;
                 alert(diaryListValue);
-                alert(dataArray);
+                alert(data);
             })
             .catch((error) => {
                 console.error("데이터 가져오기 실패:", error);

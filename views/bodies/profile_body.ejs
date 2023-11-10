@@ -1,0 +1,36 @@
+<container class="body_container_right">
+    <h1 style="margin-bottom:40px; text-align: center;">
+       PROFILE
+    </h1>
+    <div class="create_title_div" style="display: flex; flex-direction:column; align-items: center;">
+        <img src="./images/default_avatar.png" style="border-radius: 100%;">
+        <div class="md-textbox" style="width:70%;">
+            <input oninput="handleChange(event)" id="input" type="text" name="update_id" maxlength="50" value="<%=id%>" readonly>
+            <span class="material-symbols-outlined">account_circle</span>
+
+        </div>
+
+   
+        <div class="md-textbox" style="width:70%;">
+            <input oninput="handleChange(event)" id="input" type="password" name="update_password" maxlength="255"
+                value="<%=password%>" style="user-select: none;" readonly>
+            <span class="material-symbols-outlined">password</span>
+        </div>
+   
+        <div class="md-textbox" style="width:70%;">
+            <input oninput="handleChange(event)" id="input" type="text" name="update_email" maxlength="100"
+                value="<%=email%>" readonly>
+            <span class="material-symbols-outlined">mail</span>
+        </div>
+    </div>
+
+
+    <div style="display:flex; justify-content: flex-end"><a href="/profile_update"><button class="modify_buttons"
+                style="color:whitesmoke;">프로필 수정</button></a>
+        <button id="home_button" class="modify_buttons" style="margin-right:0;">
+            <a href="/" style="color:whitesmoke;">
+                홈으로
+            </a>
+        </button>
+    </div>
+</container>

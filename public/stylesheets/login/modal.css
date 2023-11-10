@@ -1,3 +1,7 @@
+/*로그인 창 css*/
+@import url(https://fonts.googleapis.com/css?family=Roboto:300);
+
+
 * {
   box-sizing: border-box;
 }
@@ -172,8 +176,6 @@ body.modal-active {
   }
 }
 
-/*로그인 창 css*/
-@import url(https://fonts.googleapis.com/css?family=Roboto:300);
 
 .login-page {
   width: 360px;

@@ -1,7 +1,8 @@
 var express = require("express");
 var router = express.Router();
 var fs = require("fs");
-
+const bcrypt = require("bcrypt");
+const saltRounds = 10;
 const app = express();
 
 const mysql = require("mysql");
@@ -11,7 +12,6 @@ const connection = mysql.createConnection(dbconfig);
 const upload = require("./upload");
 var url = require("url");
 var qs = require("querystring");
-
 
 /* GET home page. */
 router.get("/", function (req, res, next) {
@@ -393,6 +393,58 @@ app.get("/diary_list_endpoint", function (req, res) {
       throw err;
     }
     res.json(rows);
+  });
+});
+
+router.get("/profile", function (req, res, next) {
+  if (req.session.user) {
+    const { id, password, email } = req.session.user; // 폼에서 전송된 데이터를 읽어옴
+    console.log(req.session.user) 
+    res.render("profile", { id: id, password: password, email: email });
+  } else if (!req.session.user) {
+    const failMessage = "You need to login.";
+    res.json({ message: failMessage, login: false });
+  }
+});
+
+router.get("/profile_update", function (req, res, next) {
+  if (req.session.user) {
+    const { id, password, email } = req.session.user; // 폼에서 전송된 데이터를 읽어옴
+
+    res.render("profile_update_form", {
+      id: id,
+      password: password,
+      email: email,
+    });
+  } else if (!req.session.user) {
+    const failMessage = "You need to login.";
+    res.json({ message: failMessage, login: false });
+  }
+});
+
+router.post("/profile_update_process", function (req, res, next) {
+  const { update_profile_id, update_profile_password, update_profile_email } =
+    req.body; // 폼에서 전송된 데이터를 읽어옴
+  console.log(update_profile_email);
+  console.log(update_profile_id);
+  console.log(update_profile_password);
+
+  bcrypt.hash(update_profile_password, saltRounds, (err, hash) => {
+    if (err) {
+      console.error(err);
+      return;
+    }
+    const query = `
+    UPDATE users
+    SET password = '${hash}', email='${update_profile_email}'
+    WHERE username = '${update_profile_id}';`;
+    connection.query(query, (err, rows) => {
+      if (err) {
+        throw err;
+      }
+      // 삽입이 성공하면 다른 페이지로 리다이렉트 또는 메시지를 표시
+      res.redirect(`/`); // 홈페이지로 리다이렉트
+    });
   });
 });
 

@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>
+    <%= title %>
+  </title>
+  <link rel='stylesheet' href='/stylesheets/create_form.css' />
+  <link rel='stylesheet' href='/stylesheets/buttons.css' />
+  <link rel='stylesheet' href='/stylesheets/layout.css' />
+  <link rel='stylesheet' href='/stylesheets/controls.css' />
+  <link rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&amp;display=swap">
+
+</head>
+
+<%- include ('header') %>
+
+  <body>
+    <container id="body_layout_container">
+      <%- include ('body_list') %>
+        <%- include ('bodies/profile_body') %>
+    </container>
+  </body>
+
+  <script src="/javascripts/body.js"></script>
+
+</html>

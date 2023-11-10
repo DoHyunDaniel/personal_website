@@ -5,14 +5,14 @@
             <% data2.forEach(item=> { %>
                 <ul>
                     <div><a href="/diary?diary_id=<%=item.id%>">
-                            <button class="index_btn index_btn-round index_btn-marquee">
+                            <button style="width:auto;" class="index_btn index_btn-round index_btn-marquee">
                                 <span data-text=" <%= item.diary_category %>">
                                     <%= item.diary_category %>
                                 </span>
                             </button><button class="index_btn_title">
                                 <%= item.diary_title %>
                             </button>
-                    </a></div>
+                        </a></div>
 
                 </ul>
                 <% }); %>
@@ -23,7 +23,7 @@
             <% data3.forEach(item=> { %>
                 <ul>
                     <div id="index_body_titles"><a href="/diary?diary_id=<%=item.id%>">
-                            <button class="index_btn index_btn-round index_btn-marquee">
+                            <button style="width:auto;" class="index_btn index_btn-round index_btn-marquee">
                                 <span data-text=" <%= item.diary_category %>">
                                     <%= item.diary_category %>
                                 </span>
