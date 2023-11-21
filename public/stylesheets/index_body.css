@@ -1,7 +1,3 @@
-ul, button{
-  font-family: 'Sunflower',sans-serif;
-}
-
 #index_diary_list_container{
   display: grid;
   grid-template-columns: 1fr 1fr;

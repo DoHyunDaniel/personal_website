@@ -2,7 +2,7 @@
     margin-top:20px;
     margin-bottom:20px;
     position: relative;
-    font-family:'Sunflower',sans-serif ;
+    font-family: "Noto Sans Korean", "Noto Sans", sans-serif;
   }
   
   .md-textbox :is(label, span) {
@@ -33,7 +33,7 @@
     border-radius: 8px;
     outline: none;
     background: transparent;
-    color: #000000;
+    color: white;
     font-family: inherit;
     font-size: 16px;
   }
@@ -47,8 +47,8 @@
   }
   
   .md-textbox > :is(input:focus, .has-value) ~ label {
-    background: #f8e9a1;
-    color: rgba(0, 0, 0, 0.75);
+    background: #010101;
+    color: white;
     translate: 0 -56px;
   }
 
@@ -60,7 +60,7 @@ padding-top:10px;
   .md-textbox_textarea {
     margin: 40px auto 20px auto;
     position: relative;
-    font-family:'Sunflower',sans-serif ;
+    font-family: "Noto Sans Korean", "Noto Sans", sans-serif;
   }
 
   .md-textbox_textarea :is(label, span) {
@@ -88,7 +88,7 @@ padding-top:10px;
     border-radius: 8px;
     outline: none;
     background: transparent;
-    color: #000000;
+    color: white;
     font-family: inherit;
     font-size: 16px;
   }
@@ -98,7 +98,7 @@ padding-top:10px;
   }
   
   .md-textbox_textarea > :is(textarea:focus, .has-value) ~ label {
-    background: #f8e9a1;
-    color: rgba(0, 0, 0, 0.75);
-    translate: 0 -54px;
+    background: #010101;
+    color: white;
+    translate: 0 -44px;
   }

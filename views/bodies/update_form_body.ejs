@@ -1,3 +1,17 @@
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const category = "<%= data2[0].diary_category %>"; // 이 부분에서 data2[0].diary_category를 불러옵니다.
+        const radioButtons = document.getElementsByName('update_category');
+        const filename = "<%= data2[0].filename %>";
+        document.querySelector('input[name="update_filename"]').value = filename;
+        for (let i = 0; i < radioButtons.length; i++) {
+            if (radioButtons[i].value === category) {
+                radioButtons[i].checked = true;
+            }
+        }
+    });
+</script>
+
 <container class="body_container_right">
     <h1 style="margin-bottom:40px;">
         새 글 추가
@@ -36,10 +50,10 @@
         </div>
         <input type="hidden" name="update_id" value="<%=data2[0].id%>">
 
-        <div style="display: flex; justify-content: flex-start;">파일 업로드: <input type="file" name="create_fileupload"
+        <div style="display: flex; justify-content: flex-start;">파일 업로드 : <input type="file" name="create_fileupload"
                 value="파일 업로드">
-                <input type="hidden" name="update_filename" value="<%= data2[0].filename %>">
-                <input type="hidden" name="update_filepath" value="<%= data2[0].filepath %>">
+            <input type="hidden" name="update_filename" value="<%= data2[0].filename %>">
+            <input type="hidden" name="update_filepath" value="<%= data2[0].filepath %>">
         </div>
 
         <div style="display:flex; justify-content: flex-end"><input type="submit" value="등록" class="modify_buttons"

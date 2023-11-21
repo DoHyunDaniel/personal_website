@@ -1,0 +1,192 @@
+<script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+<script>
+    // 숨김 처리하기
+    document.addEventListener("DOMContentLoaded", function () {
+        // delete버튼 숨기기
+        $.get("/api/getSessionUser", function (data) {
+            if (data.user && data.user === "admin") {
+                document.querySelectorAll(".visitors_book_delete_btn").forEach(element => {
+                    element.style.display = "block";
+                })
+            }
+        })
+
+        // 페이지네이션 함수
+        const currentPageNum = document.querySelectorAll(".pagination_container span");
+        const url = new URL(window.location.href);
+        const pageCategory = url.searchParams.get("category");
+
+        const currentPage = parseInt(url.searchParams.get("page")) || 1;
+
+        currentPageNum.forEach(span => {
+            const pageNum = parseInt(span.textContent);
+            if (pageNum === currentPage) {
+                span.style.fontWeight = "1000";
+                span.style.color = "#fc7878";
+            }
+        });
+
+        // 아무 글이 없을 때 div 띄우기
+        const divForNoValue = document.querySelector(".divForNoValue");
+        const bookDiv = document.querySelector(".visitors_book_div");
+        if (bookDiv && (bookDiv.children.length > 0 || bookDiv.textContent.trim() !== "")) {
+            // bookDiv 안에 자식 요소가 있거나 내용이 비어 있지 않은 경우
+            divForNoValue.style.display = "none";
+        } else {
+            // bookDiv 안에 자식 요소가 없거나 내용이 비어 있는 경우
+            divForNoValue.style.display = "block";
+        }
+        // 어드민이 작성했을 때 요소 바꾸기
+        const visitorsDiv = document.querySelector(".visitors_book_div")
+
+
+        // 아이디 없을 때 
+
+        $("#visitors_book_submit_btn").submit(function () {
+            event.preventDefault();
+
+            // 폼 데이터 수집
+            const formData = {
+                visitors_book_upload_text: $("input[name='visitors_book_upload_text']").val()
+            };
+
+            // POST 요청을 보내고 응답을 처리
+            $.post("/visitors_book_upload_process", formData, function (data) {
+                // 서버로부터 받은 JSON 응답에서 메시지를 추출
+                const login = data.login;
+                const Message = data.message;
+                if (login === false) {
+                    const modal2 = $('<div class="modal2" style="left:39vw;"><div>');
+                    modal2.text(Message);
+                    // 확인 버튼을 추가
+                    const closeButton = $("<button>OK</button></div></div>");
+                    closeButton.click(function () {
+                        modal2.remove(); // 모달 창 닫기
+                        window.location.replace("/visitors_book?page=1");
+                    });
+                    modal2.append(closeButton);
+
+                    // 모달 창을 body에 추가
+                    $("html").append(modal2);
+                } else {
+                    window.location.replace("/visitors_book?page=1");
+                }
+            });
+        });
+
+        const adminElements = document.querySelectorAll(".speech-bubble");
+        adminElements.forEach(element => {
+            const textElements = element.textContent;
+
+            if (textElements.includes('관리자: admin')) {
+                element.style.backgroundColor = "#00b0ff";
+                element.style.color = "white";
+            }
+        })
+    });
+
+
+
+</script>
+<style>
+    .speech-bubble {
+        font-family: "Helvetica Neue", Helvetica, sans-serif;
+        width: 100%;
+        height: auto;
+        padding: 10px 10px 10px 10px;
+        color:black;
+        position: relative;
+        border-color: transparent;
+        background: #E5E5EA;
+        border-radius: 2em;
+        margin: 30px auto 30px auto;
+    }
+
+    /* .speech-bubble:after {
+        content: '';
+        position: absolute;
+        bottom: 0;
+        left: 5%;
+        width: 0;
+        height: 0;
+        border: 20px solid transparent;
+        border-top-color: #E5E5EA;
+        border-bottom: 0;
+        border-left: 0;
+        margin-left: -10px;
+        margin-bottom: -20px;
+    } */
+</style>
+
+<container class="body_container_right">
+    <h1>Visitor's Book</h1>
+    <!--글이 없을 때-->
+    <div class="divForNoValue">
+        <div
+            style="display:flex; flex-direction:column; align-items: center; height:100%; width: 100%; text-align: center;">
+            <div style="width:30vw; height:30vw; box-shadow: 5px 5px 15px grey; overflow:hidden; border-radius:100%;">
+                <img src="/images/default_image2.jpg" style="width:100%; height:100%;  object-fit: cover; ">
+            </div>
+            <h2>새 글을 작성해보세요!</h2>
+        </div>
+    </div>
+    <!--방명록 div-->
+    <div class="visitors_book_div">
+        <% data.forEach(item=> { %>
+            <ul class="speech-bubble" style="display:flex; flex-direction: column;">
+                <span class="date" style="text-align: right; font-size: 12px;">
+                    <%=item.date.getFullYear() %>년 <%=item.date.getMonth()+1 %>월 <%=item.date.getDate() %>일<br>
+                                <% if (item.writer==='admin' ) { %>
+                                    <strong>관리자: <%= item.writer %></strong>
+                                    <% } else { %>
+                                        작성자: <%= item.writer %>
+                                            <% } %>%>
+                </span>
+                <span style="font-size:16px; margin: 10px 5px 10px 5px;">
+                    <%= item.text %>
+                </span>
+                <div style="width: 100%; display:flex; justify-content: flex-end;">
+                    <form action="visitors_book_delete_process" method="post">
+                        <input type="hidden" name="visitors_book_id" value="<%=item.id%>">
+                        <button class="visitors_book_delete_btn" type="submit"
+                            style="font-size:14px; margin-bottom:0px; margin-right:0px; padding: 10px; background-color: #444857; color:white; font-weight:700;border-radius: 20%; display: none;">delete</button>
+                    </form>
+                </div>
+            </ul>
+            <% }); %>
+    </div>
+    <div class="pagination_container">
+        <!-- 페이징 컨트롤을 표시할 곳 -->
+        <% if (curindex> 1) { %>
+            <a href="/visitors_book?page=<%= curindex - 1 %>"><span>이전</span></a>
+            <% } %>
+
+                <% let totalPages=Math.ceil(AllIndex / pageSize); %>
+                    <% let currentPageGroup=Math.ceil(curindex / 5); %>
+                        <% let startPage=(currentPageGroup - 1) * 5 + 1; %>
+                            <% let endPage=Math.min(startPage + 4, totalPages); %>
+
+                                <% for (let i=startPage; i <=endPage; i++) { %>
+                                    <a href="/visitors_book?page=<%= i %>">
+                                        <span id="pageNum">
+                                            <%= i %>
+                                        </span>
+                                    </a>
+                                    <% } %>
+
+                                        <% if (curindex < totalPages) { %>
+                                            <a href="/visitors_book?page=<%= curindex + 1 %>"><span>다음</span></a>
+                                            <% } %>
+    </div>
+    <div>
+        <form action="/visitors_book_upload_process" method="post">
+            <div class="md-textbox_textarea">
+                <textarea  type="text" name="visitors_book_upload_text" style="resize:none; overflow-y:auto; width:100%; height: 120px; max-height:auto" maxlength="500"
+                    placeholder="Leave your comment here"></textarea>
+            </div>
+            <div style="display: flex; margin-top:15px; width:100% ; justify-content: flex-end;">
+            <button class="submit_btn" id="visitors_book_submit_btn" type="submit"
+                style="justify-self:right; font-size:16px;">Upload</button></div>
+        </form>
+    </div>
+</container>

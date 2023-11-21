@@ -24,24 +24,6 @@
             }
         });
 
-        fetch("/diary_list_endpoint")
-            .then((response) => response.json())
-            .then((data) => {
-                // 서버에서 받은 데이터를 사용할 수 있습니다.
-                const dataArray = rows;
-                const diaryListValue = dataArray.length;
-                alert(diaryListValue);
-                alert(data);
-            })
-            .catch((error) => {
-                console.error("데이터 가져오기 실패:", error);
-            });
-
-
-        const divForNoValue = document.querySelector(".divForNoValue");
-        if (diaryListValue == null) {
-            divForNoValue.style.display = "block";
-        }
         currentPageNum.forEach(span => {
             const pageNum = parseInt(span.textContent);
             if (pageNum === currentPage) {
@@ -49,12 +31,22 @@
                 span.style.color = "#fc7878";
             }
         });
+
+        var categoryDiv = document.querySelectorAll(".category_button");
+        categoryDiv.forEach(element => {
+            if (element.getAttribute('name') === pageCategory) {
+                element.style.backgroundColor = "white";
+                element.style.color = "black";
+                
+            }
+        });
     });
 </script>
 
 <container class="body_container_right">
     <div class="divForNoValue" style="display: none; height:100%; width: 100%; text-align: center;">새 글을 작성해보세요!</div>
-    <h1>일기 게시판</h1>
+    <h1>Diary</h1>
+    <br>
     <div class="category_selector">
         <a href="/diary_list?category=전체보기"><button class="category_button" name="전체보기">전체보기</button></a>
         <a href="/diary_list?category=없음"><button class="category_button" name="없음">없음</button></a>
@@ -67,15 +59,23 @@
             <span>제목</span><span></span><span></span><span style="justify-self: end; margin-right:20px;">작성시간</span>
         </div>
         <% data4.forEach(item=> { %>
-            <ul>
-                <div><a href="/diary?diary_id=<%=item.id%>">
-                        <%= item.diary_category %> <button>
+            <ul style="display: grid; grid-template-columns: 2fr 1fr;">
+                <div style="display: flex; white-space: nowrap; align-items: center;">
+                    <div style="width:80px;">
+                        <%= item.diary_category %>
+                    </div>
+                    <button>
+                        <a href="/diary?diary_id=<%=item.id%>">
+                            <div style="max-width:30vw; overflow: hidden;">
                                 <%= item.diary_title %>
-                            </button>
+                            </div>
+                        </a>
+                    </button>
                 </div>
                 <div class="diary_list_body_date">
-                    <%= nyear %>년 <%= nmonth %>월 <%= nday %>일
-                </div></a>
+                    <%= item.diary_date.getFullYear() %>년 <%= item.diary_date.getMonth() %>월 <%=
+                                item.diary_date.getDate() %>일
+                </div>
             </ul>
 
             <!-- 반드시 SQL 쿼리에 전달된 id 값을 검증하고 SQL 인젝션을 방지하기 위해 적절한 대책을 취해야 합니다. 
@@ -88,13 +88,23 @@
         <% if (curindex> 1) { %>
             <a href="/diary_list?category=<%=category%>&page=<%= curindex - 1 %>"><span>이전</span></a>
             <% } %>
-                <% for (let i=1; i <=Math.ceil(AllIndex / pageSize); i++) { %>
-                    <a href="/diary_list?category=<%=category%>&page=<%=i%>"><span id="pageNum">
-                            <%= i %>
-                        </span></a>
-                    <% } %>
-                        <% if (curindex < Math.ceil(AllIndex / pageSize)) { %>
-                            <a href="/diary_list?category=<%=category%>&page=<%= curindex + 1 %>"><span>다음</span></a>
-                            <% } %>
+
+                <% let totalPages=Math.ceil(AllIndex / pageSize); %>
+                    <% let currentPageGroup=Math.ceil(curindex / 5); %>
+                        <% let startPage=(currentPageGroup - 1) * 5 + 1; %>
+                            <% let endPage=Math.min(startPage + 4, totalPages); %>
+
+                                <% for (let i=startPage; i <=endPage; i++) { %>
+                                    <a href="/diary_list?category=<%=category%>&page=<%= i %>">
+                                        <span id="pageNum">
+                                            <%= i %>
+                                        </span>
+                                    </a>
+                                    <% } %>
+
+                                        <% if (curindex < totalPages) { %>
+                                            <a
+                                                href="/diary_list?category=<%=category%>&page=<%= curindex + 1 %>"><span>다음</span></a>
+                                            <% } %>
     </div>
 </container>

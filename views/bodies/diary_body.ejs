@@ -1,16 +1,14 @@
 <body>
     <script src = "/javascripts/body.js"></script>
-    <script>
-        // data2는 서버에서 선언되고 클라이언트에 전달되는 변수라서 JSON으로 변수를 파싱해줘야 함
-        const data2 = <%- JSON.stringify(data2) %>;
-    </script>
+
     <script>
         document.addEventListener("DOMContentLoaded", function () {
-            if (data2[0].diary_date_updated != undefined) {
-                document.getElementById("diary_time_updated").style.display = "block";
-            }
-            if (data2[0].filename != null) {
+            var data2 = <%- JSON.stringify(data2) %>;
+            if (data2[0].filename) {
                 document.getElementById("diary_image").style.display = "block";
+            }
+            if (data2[0].diary_date_updated) {
+                document.getElementById("diary_time_updated").style.display = "block";
             }
         });
     </script>
@@ -33,9 +31,9 @@
             </div>
         </container>
 
-        <container id="diary_text_grid_container">
+        <container id="diary_text_grid_container" style="color:rgb(247, 246, 240);">
             <div id="diary_textarea" style="--d: .5s;">
-                <container id="diary_time_grid_container" style="--d: .2s;">
+                <container id="diary_time_grid_container" style="--d: .2s; margin-bottom:10px;">
                     <div id="diary_time" class="diary_time">
                         작성일: <%= year %>년 <%= month %>월 <%= day %>일 <%= hour %>시 <%= minute %>분
                     </div>

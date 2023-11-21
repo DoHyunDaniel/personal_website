@@ -1,39 +1,158 @@
-<container class="body_container_right">
-    <container id="index_diary_list_container">
-        <div class="diary_list_div">
-            <h2>Most Viewed</h2>
-            <% data2.forEach(item=> { %>
-                <ul>
-                    <div><a href="/diary?diary_id=<%=item.id%>">
-                            <button style="width:auto;" class="index_btn index_btn-round index_btn-marquee">
-                                <span data-text=" <%= item.diary_category %>">
-                                    <%= item.diary_category %>
-                                </span>
-                            </button><button class="index_btn_title">
-                                <%= item.diary_title %>
-                            </button>
-                        </a></div>
+<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 
-                </ul>
-                <% }); %>
-        </div>
+<style>
+    .thumbNail_wrapper {
+        position: relative;
+        width: 180px;
+        height: 280px;
+    }
 
-        <div class="diary_list_div">
-            <h2>Recent</h2>
-            <% data3.forEach(item=> { %>
-                <ul>
-                    <div id="index_body_titles"><a href="/diary?diary_id=<%=item.id%>">
-                            <button style="width:auto;" class="index_btn index_btn-round index_btn-marquee">
-                                <span data-text=" <%= item.diary_category %>">
-                                    <%= item.diary_category %>
-                                </span>
+    .blue_square {
+        position: absolute;
+        top: 20px;
+        left: 10px;
+        width: 190px;
+        height: 255px;
+        border-radius: 5%;
+        background-color: rgb(59, 59, 67);
+        opacity: 0.4;
+        z-index: -1;
+        transition: width 0.3s, height 0.3s, top 0.3s, left 0.3s, opacity 0.3s;
+    }
 
-                            </button><button class="index_btn_title">
-                                <%= item.diary_title %>
-                            </button></a>
-                    </div>
-                </ul>
-                <% }); %>
-        </div>
+    .blue_square * {
+        opacity: 0;
+        transition: opacity 0.3s ease;
+    }
+
+    .thumbNail_wrapper:hover .blue_square {
+        top: 0;
+        left: -5px;
+        width: 200px;
+        height: 300px;
+        opacity: 0.9;
+        z-index: 1;
+    }
+
+    .thumbNail_wrapper:hover .blue_square * {
+        opacity: 1.0;
+    }
+</style>
+
+<body>
+    <container class="body_container_right">
+        <container id="index_diary_list_container" style="display: flex; flex-direction: column;">
+            <div class="diary_list_div" style="display: flex; flex-direction: column; justify-items: center;">
+                <h2>Most Viewed</h2>
+                <container style="display: grid; grid-template-columns: 1fr 1fr 1fr 1fr 1fr;">
+                    <% data2.forEach(item=> { %>
+                        <ul style="margin:0px; padding: 0px;">
+                            <a href="/diary?diary_id=<%=item.id%>">
+                                <div style="display: flex; flex-direction: column; align-items: center;">
+                                    <div class="thumbNail_wrapper">
+                                        <img class="thumbNail_diary" src="<%-item.filepath.replace('public', '')%>"
+                                            alt="<%= item.filename%>"
+                                            onerror="this.onerror=null; this.src='/images/no-image-placeholder.jpg';"
+                                            style="width:180px; height:260px; margin:5px auto 10px auto; border-radius: 10%;">
+                                        <div class="blue_square" style="display: flex; flex-direction: column;">
+                                            <a href="/diary?diary_id=<%=item.id%>"
+                                                style="margin:10px 10px 0 0; color:white; justify-self: flex-end; align-self: flex-end;"
+                                                title="View detail"><span class="material-symbols-outlined">
+                                                    pageview
+                                                </span></a>
+                                            <div
+                                                style="height: 240px; margin-top:0; font-size: 12px; padding: 0px 10px 5px 10px; overflow:hidden;">
+                                                <%=item.diary_text%>
+                                            </div>
+                                            <div
+                                                style="display: flex; justify-self: flex-end; align-self: flex-start; align-items: center; font-size: 12px; padding: auto 10px auto 10px;">
+                                                <button title="Category"
+                                                    style="width:50px; height: 30px; white-space:nowrap; align-self:flex-start; padding:0px; border-radius: 10%;"
+                                                    class="index_btn index_btn-round">
+                                                    <span style="font-size: 10px; "
+                                                        data-text=" <%= item.diary_category %>">
+                                                        <%= item.diary_category %>
+                                                    </span>
+                                                </button>
+                                                <button title="View-count" class="index_btn index_btn-round"
+                                                    style="width:50px; height:30px; border-radius:10%; white-space: nowrap;">
+                                                    <div
+                                                        style="display: flex; align-items: center; justify-items: center;">
+                                                        <span class="material-symbols-outlined"
+                                                            style="font-size: 14px; margin:auto 5px auto 10px;">
+                                                            visibility </span><span
+                                                            style="font-size:12px;"><%-item.viewCnt%></span></div>
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <button class="index_btn_title"
+                                        style="max-width: 180px; overflow: hidden; white-space: nowrap; text-overflow: ellipsis;">
+                                        <%= item.diary_title %>
+                                    </button>
+                                </div>
+                            </a>
+                        </ul>
+                        <% }); %>
+                </container>
+            </div>
+            <br><br>
+            <div class="diary_list_div">
+                <h2>Recent</h2>
+                <container style="display: grid; grid-template-columns: 1fr 1fr 1fr 1fr 1fr;">
+                    <% data3.forEach(item=> { %>
+                        <ul style="margin:0px; padding: 0px;">
+                            <a href="/diary?diary_id=<%=item.id%>">
+                                <div style="display: flex; flex-direction: column; align-items: center;"
+                                    id="index_body_titles">
+                                    <div class="thumbNail_wrapper">
+                                        <img class="thumbNail_diary" src="<%-item.filepath.replace('public', '')%>"
+                                            alt="<%= item.filename%>"
+                                            onerror="this.onerror=null; this.src='/images/no-image-placeholder.jpg';"
+                                            style="width:180px; height:260px; margin:5px auto 10px auto; border-radius: 10%;">
+                                        <div class="blue_square" style="display: flex; flex-direction: column;">
+                                            <a href="/diary?diary_id=<%=item.id%>"
+                                                style="margin:10px 10px 0 0; color:white; justify-self: flex-end; align-self: flex-end;"
+                                                title="View detail"><span class="material-symbols-outlined">
+                                                    pageview
+                                                </span></a>
+                                            <div
+                                                style="height: 240px; margin-top:0; font-size: 12px; padding: 0px 10px 5px 10px; overflow:hidden;">
+                                                <%=item.diary_text%>
+                                            </div>
+                                            <div
+                                                style="display: flex; justify-self: flex-end; align-self: flex-start; align-items: center; font-size: 12px; padding: auto 10px auto 10px;">
+                                                <button title="Category"
+                                                    style="width:50px; height: 30px; white-space:nowrap; align-self:flex-start; padding:0px; border-radius: 10%;"
+                                                    class="index_btn index_btn-round">
+                                                    <span style="font-size: 10px; "
+                                                        data-text=" <%= item.diary_category %>">
+                                                        <%= item.diary_category %>
+                                                    </span>
+                                                </button>
+                                                <button title="View-count" class="index_btn index_btn-round"
+                                                    style="width:50px; height:30px; border-radius:10%; white-space: nowrap;">
+                                                    <div
+                                                        style="display: flex; align-items: center; justify-items: center;">
+                                                        <span class="material-symbols-outlined"
+                                                            style="font-size: 14px; margin:auto 5px auto 10px;">
+                                                            visibility </span><span
+                                                            style="font-size:12px;"><%-item.viewCnt%></span></div>
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <button class="index_btn_title"
+                                        style="max-width: 180px; overflow: hidden; white-space: nowrap; text-overflow: ellipsis;">
+                                        <%= item.diary_title %>
+                                    </button>
+                                </div>
+                            </a>
+                        </ul>
+                        <% }); %>
+                </container>
+            </div>
+        </container>
     </container>
-</container>
+</body>

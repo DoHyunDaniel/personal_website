@@ -1,7 +1,6 @@
 /*로그인 창 css*/
 @import url(https://fonts.googleapis.com/css?family=Roboto:300);
 
-
 * {
   box-sizing: border-box;
 }
@@ -42,24 +41,26 @@ body.modal-active {
   animation: zoomOut 0.5s cubic-bezier(0.165, 0.84, 0.44, 1) forwards;
 }
 .modal2 {
-    background: white;
-    padding: 50px;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    border-radius: 3px;
-    font-weight: 300;
-    position: fixed;
-    top: 40vh;
-    left: 38vw;
-    transform: scale(0); 
-    z-index: 1000;
-    animation: zoomIn 0.5s 0.8s cubic-bezier(0.165, 0.84, 0.44, 1) forwards;
-  }
+  opacity: 0.9;
+  background: #252830;
+  color: white;
+  padding: 50px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  border-radius: 3px;
+  font-weight: 300;
+  position: fixed;
+  top: 40vh;
+  left: 38vw;
+  transform: scale(0);
+  z-index: 1000;
+  animation: zoomIn 0.5s 0.8s cubic-bezier(0.165, 0.84, 0.44, 1) forwards;
+}
 
-.modal2 button{
-    margin-top:30px;
-    text-align: center;
+.modal2 button {
+  margin-top: 30px;
+  text-align: center;
 }
 
 #modal-container .modal-background {
@@ -176,7 +177,6 @@ body.modal-active {
   }
 }
 
-
 .login-page {
   width: 360px;
   padding: 8% 0 0;
@@ -185,7 +185,8 @@ body.modal-active {
 .form {
   position: relative;
   z-index: 1;
-  background: #ffffff;
+  opacity: 0.9;
+  background: #252830;
   max-width: 360px;
   margin: 0 auto 100px;
   padding: 45px;
@@ -195,7 +196,8 @@ body.modal-active {
 .form input {
   font-family: "Roboto", sans-serif;
   outline: 0;
-  background: #f2f2f2;
+  background: #464954;
+  color: white;
   width: 100%;
   border: 0;
   margin: 0 0 15px;
@@ -207,7 +209,7 @@ body.modal-active {
   font-family: "Roboto", sans-serif;
   text-transform: uppercase;
   outline: 0;
-  background: #f76c6c;
+  background: #181b20;
   width: 100%;
   border: 0;
   padding: 15px;
@@ -220,7 +222,7 @@ body.modal-active {
 .form button:hover,
 .form button:active,
 .form button:focus {
-  background: #f76c6c;
+  background: #36383d;
 }
 .form .message {
   margin: 15px 0 0;
@@ -228,7 +230,7 @@ body.modal-active {
   font-size: 12px;
 }
 .form .message a {
-  color: #f76c6c;
+  color: #ffffff;
   text-decoration: none;
 }
 .form .register-form {

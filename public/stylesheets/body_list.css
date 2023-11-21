@@ -27,7 +27,7 @@ button {
   z-index: 1;
   width: 200px;
   height: 120%;
-  background: #243052;
+  background: #252830;
   transition: width 0.4s;
 }
 
@@ -58,11 +58,11 @@ button {
 
 .sidebar button.active,
 .subnav {
-  background: #2b395e;
+  background: #252830;
 }
 
 .sidebar button:hover {
-  background: rgb(45, 60, 100);
+  background: #3e424e;
 }
 
 .sidebar button span:nth-child(2) {

@@ -34,7 +34,7 @@ $('#logout').click(function () {
                 const user = data.user;
                 const welcomeMessage = document.getElementById('welcome-message');
                 welcomeMessage.textContent = `Welcome, ${user}`;
-                welcomeMessage.style = "background-color:#243052; z-index:100; padding-right:10px; position:fixed;"
+                welcomeMessage.style = "background-color:#252830; z-index:100; padding-right:10px; position:fixed;"
 
                 const writeButtons = document.getElementById('buttons_container');
                 writeButtons.style.display = "flex";
@@ -42,7 +42,7 @@ $('#logout').click(function () {
                 const user = data.user;
                 const welcomeMessage = document.getElementById('welcome-message');
                 welcomeMessage.textContent = `Welcome, ${user}`;
-                welcomeMessage.style = "background-color:#243052; z-index:100; padding-right:10px; position:fixed;"
+                welcomeMessage.style = "background-color:#252830; z-index:100; padding-right:10px; position:fixed;"
                 
                 const writeButtons = document.getElementById('buttons_container');
                 writeButtons.style.display = "none";
@@ -50,7 +50,7 @@ $('#logout').click(function () {
                 // 세션 정보가 없는 경우 (비로그인 상태)
                 const welcomeMessage = document.getElementById('welcome-message');
                 welcomeMessage.textContent = `Please login`;
-                welcomeMessage.style = "background-color:#243052; z-index:100; padding-right:10px; position:fixed;"
+                welcomeMessage.style = "background-color:#252830; z-index:100; padding-right:10px; position:fixed;"
 
                 const writeButtons = document.getElementById('buttons_container');
                 writeButtons.style.display = "none";

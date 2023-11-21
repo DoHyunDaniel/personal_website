@@ -59,7 +59,7 @@ router.get("/diary", function (req, res, next) {
         throw err2;
       }
       const imagePathfromdb = `${rows2[0].filepath}`;
-      const imagePath = `images/${imagePathfromdb.replace("publicimages", "")}`;
+      const imagePath = `${imagePathfromdb.replace("public", "")}`;
       const date = new Date(rows2[0].diary_date); // data2[0].diary_date는 날짜 데이터
       const year = date.getFullYear();
       const month = date.getMonth() + 1; // getMonth()는 0부터 시작하므로 1을 더함
@@ -126,19 +126,21 @@ router.post(
   function (req, res, next) {
     // Set up a route for file uploads
     // Handle the uploaded file
-    const filePath = req.file.path;
-    const originalname = req.file.originalname;
-    console.log("File upload Successfully!");
+    if (req.file) {
+      var filePath = req.file.path;
+      var originalname = req.file.originalname;
+    }
+    console.log("File upload Successful!");
 
     const { create_title, create_text, create_category } = req.body; // 폼에서 전송된 데이터를 읽어옴
 
     // title 및 text를 이용하여 diary_table에 새로운 레코드를 삽입
     const query = `INSERT INTO diary_table (diary_title, diary_date, diary_text, diary_category, filename, filepath) 
-  VALUES ("${create_title}", NOW(),"${create_text}","${create_category}", "${originalname}", "${filePath}")`;
+  VALUES (?, NOW(),?,?,?,?)`;
     connection.query(
       query,
       [create_title, create_text, create_category, originalname, filePath],
-      (err, result) => {
+      (err, rows) => {
         if (err) {
           throw err;
         } else {
@@ -243,29 +245,40 @@ router.post(
 
     const query = `
   UPDATE diary_table
-  SET diary_title = '${escapedUpdateTitle}', diary_text='${escapedUpdateText}', diary_category = '${update_category}',
-  diary_date_updated = NOW(), filename = '${newOriginalname}', filepath = '${newFilePath}'
-  WHERE id = ${update_IntId};`;
-    connection.query(query, (err, rows) => {
-      if (err) {
-        throw err;
-      }
-      if (
-        fs.existsSync(filePath) &&
-        req.file != undefined &&
-        update_filepath.replace("publicimages", "") != null
-      ) {
-        // 파일이 존재한다면 true 그렇지 않은 경우 false 반환
-        try {
-          fs.unlinkSync(filePath);
-          console.log("image delete");
-        } catch (error) {
-          console.log(error);
+  SET diary_title = ?, diary_text = ?, diary_category = ?,
+  diary_date_updated = NOW(), filename = ?, filepath = ?
+  WHERE id = ?;`;
+    connection.query(
+      query,
+      [
+        escapedUpdateTitle,
+        escapedUpdateText,
+        update_category,
+        newOriginalname,
+        newFilePath,
+        update_IntId,
+      ],
+      (err, rows) => {
+        if (err) {
+          throw err;
         }
+        if (
+          fs.existsSync(filePath) &&
+          req.file != undefined &&
+          update_filepath.replace("publicimages", "") != null
+        ) {
+          // 파일이 존재한다면 true 그렇지 않은 경우 false 반환
+          try {
+            fs.unlinkSync(filePath);
+            console.log("image delete");
+          } catch (error) {
+            console.log(error);
+          }
+        }
+        // 삽입이 성공하면 다른 페이지로 리다이렉트 또는 메시지를 표시
+        res.redirect(`/diary?diary_id=${update_id}`); // 홈페이지로 리다이렉트
       }
-      // 삽입이 성공하면 다른 페이지로 리다이렉트 또는 메시지를 표시
-      res.redirect(`/diary?diary_id=${update_id}`); // 홈페이지로 리다이렉트
-    });
+    );
   }
 );
 
@@ -318,13 +331,6 @@ router.get("/diary_list", function (req, res, next) {
       throw err2;
     }
 
-    const date = new Date(rows2[0].diary_date_updated); // data2[0].diary_date는 날짜 데이터
-    const nyear = date.getFullYear();
-    const nmonth = date.getMonth() + 1; // getMonth()는 0부터 시작하므로 1을 더함
-    const nday = date.getDate();
-    const nhour = date.getHours();
-    const nminute = date.getMinutes();
-
     if (category_selector === "전체보기") {
       var getAllIndex = `SELECT COUNT(*) as totalcount FROM diary_table;`;
     } else {
@@ -363,11 +369,6 @@ router.get("/diary_list", function (req, res, next) {
           title: res.locals.title,
           notice: res.locals.notice,
           data2: rows2,
-          nyear: nyear,
-          nmonth: nmonth,
-          nday: nday,
-          nhour: nhour,
-          nminute: nminute,
           data4: rows4,
           AllIndex: totalCount,
           pageSize: pageSize,
@@ -399,7 +400,7 @@ app.get("/diary_list_endpoint", function (req, res) {
 router.get("/profile", function (req, res, next) {
   if (req.session.user) {
     const { id, password, email } = req.session.user; // 폼에서 전송된 데이터를 읽어옴
-    console.log(req.session.user) 
+    console.log(req.session.user);
     res.render("profile", { id: id, password: password, email: email });
   } else if (!req.session.user) {
     const failMessage = "You need to login.";
@@ -425,9 +426,6 @@ router.get("/profile_update", function (req, res, next) {
 router.post("/profile_update_process", function (req, res, next) {
   const { update_profile_id, update_profile_password, update_profile_email } =
     req.body; // 폼에서 전송된 데이터를 읽어옴
-  console.log(update_profile_email);
-  console.log(update_profile_id);
-  console.log(update_profile_password);
 
   bcrypt.hash(update_profile_password, saltRounds, (err, hash) => {
     if (err) {
@@ -447,5 +445,81 @@ router.post("/profile_update_process", function (req, res, next) {
     });
   });
 });
+
+router.get("/visitors_book", function (req, res, next) {
+  var getAllIndex = `SELECT COUNT(*) as totalCount FROM visitor_table`;
+  if (req.session.user) {
+    var userId = req.session.user.id;
+    console.log(userId);
+  } else {
+    userId = null;
+  }
+  connection.query(getAllIndex, (err2, rows2) => {
+    if (err2) {
+      throw err2;
+    }
+    const totalCount = rows2[0].totalCount;
+    console.log(totalCount);
+    var curindex = parseInt(req.query.page);
+    const pageSize = 10;
+    const DEFAULT_START_INDEX = 1;
+    console.log(curindex);
+    if (!curindex || curindex <= 0) {
+      curindex = DEFAULT_START_INDEX;
+    }
+    if (!pageSize || pageSize <= 0) {
+      pageSize = DEFAULT_PAGE_SIZE;
+    }
+    const startIndex = (curindex - 1) * pageSize;
+    const query = `SELECT * FROM visitor_table ORDER BY date DESC
+    LIMIT ${startIndex}, ${pageSize}`;
+    connection.query(query, (err, rows) => {
+      if (err) {
+        throw err;
+      }
+      res.render("visitors_book", {
+        userId: userId,
+        data: rows,
+        data2: rows2,
+        AllIndex: totalCount,
+        pageSize: pageSize,
+        curindex: curindex,
+      });
+    });
+  });
+});
+
+router.post("/visitors_book_upload_process", function (req, res, next) {
+  if (req.session.user) {
+    var user = req.session.user.id;
+    const text = req.body.visitors_book_upload_text;
+    const query = `INSERT INTO visitor_table(writer, text, date) VALUES(?, ? ,NOW())`;
+    console.log(text)
+    console.log(typeof text)
+    connection.query(query, [user, text], (err, rows) => {
+      if (err) {
+        throw err;
+      }
+      res.redirect(`/visitors_book?page=1`); // 홈페이지로 리다이렉트
+    });
+  } else {
+    const message = "You need to login.";
+    res.json({ message: message, login: false });
+  }
+});
+
+router.post("/visitors_book_delete_process", function (req, res, next) {
+  const visitors_book_id = parseInt(req.body.visitors_book_id); // req.body에서 diary_id를 추출
+  console.log(visitors_book_id)
+    const query = `DELETE FROM visitor_table WHERE id = ${visitors_book_id}`;
+    connection.query(query, (err) => {
+      if (err) {
+        throw err;
+      }
+
+      // 삭제가 성공하면 다른 페이지로 리다이렉트 또는 메시지를 표시
+      res.redirect("/visitors_book??page=1"); // 홈페이지로 리다이렉트
+    });
+  });
 
 module.exports = router;

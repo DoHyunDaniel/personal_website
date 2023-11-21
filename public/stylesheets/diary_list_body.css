@@ -1,68 +1,72 @@
-button{
-  font-family: "Sunflower", sans-serif;
-}
-
-ul{
+ul {
   border-top: 1px solid #ffffff;
   border-bottom: 1px solid #ffffff;
-  margin-top:-17px;
+  margin-top: -17px;
 }
 
-ul button{
-  margin:30px;
+ul button {
+  margin: 30px;
   font-size: 18px;
 }
 
-.diary_list_div{
+.diary_list_div {
   width: 100%;
-  margin-top:40px;
-  margin-bottom:20px;
+  margin-top: 40px;
+  margin-bottom: 20px;
 }
 
-.diary_list_div ul{
-  
+.diary_list_div ul {
   display: grid;
   grid-template-columns: 1fr 1fr;
   align-items: center;
 }
+.diary_list_div span {
+  color: rgb(238, 244, 227);
+}
+.diary_list_div div {
+  color: rgb(238, 244, 227);
+}
 
-.pagination_container{
+.pagination_container {
   display: flex;
   width: 100%;
   align-items: center;
   justify-content: center;
 }
 
-.pagination_container span{
+.pagination_container span {
   margin: 20px;
+  color: rgb(238, 244, 227);
 }
 
-.diary_list_div_titlearea{
+.diary_list_div_titlearea {
+  color: rgb(238, 244, 227);
   display: grid;
-  grid-template-columns: 1fr 1fr 1fr 1fr;
-  margin-bottom:40px;
+  grid-template-columns: 2fr 1fr 1fr 1fr;
+  margin-bottom: 40px;
   align-items: center;
   justify-items: center;
   font-size: 18px;
-  font-weight:700;
+  font-weight: 700;
 }
-.diary_list_body_date{
-  padding-right:20px;
+.diary_list_body_date {
+  color: rgb(238, 244, 227);
+  padding-right: 20px;
   text-align: right;
 }
 
-.category_selector{
+.category_selector {
   display: grid;
   grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
   justify-items: center;
   align-items: center;
 }
 
-.category_selector button{
+.category_selector button {
   text-align: center;
-  width:6rem;
-  height:3rem;
-  background-color: coral;
+  width: 6rem;
+  height: 3rem;
+  background-color: #444857;
   border-radius: 20px;
   font-size: 16px;
   color: white;
