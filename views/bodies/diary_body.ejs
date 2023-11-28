@@ -41,7 +41,7 @@
                         수정일: <%= nyear %>년 <%= nmonth %>월 <%= nday %>일 <%= nhour %>시 <%= nminute %>분
                     </div>
                 </container>
-                <img id="diary_image" class="diary_image" src="<%=imagePath%>" alt="My image" style="display:none; max-width: 100%;">
+                <img id="diary_image" class="diary_image" src="<%=imagePath%>" alt="My image" style="display:none;  max-width: 100%;">
                 <p>
                     <%- data2[0].diary_text.replace(/\n/g, '<br>' ) %>
                 </p>
@@ -51,7 +51,7 @@
         <container id="buttons_container">
             <div> </div>
             <button class="modify_buttons"><a href="/create" style="color:whitesmoke">글쓰기</a></button>
-            <form action="delete_process" method="post">
+            <form action="delete_process" method="post" style="margin-bottom:0px;">
                 <button type="submit" id="delete_button" class="modify_buttons" style="color:whitesmoke">
                     <input type="hidden" name="diary_id" value=<%=data2[0].id%>>
                     삭제

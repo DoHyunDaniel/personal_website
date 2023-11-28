@@ -46,6 +46,13 @@ router.get("/", function (req, res, next) {
   });
 });
 
+router.get("/about_me",function(req,res,next){
+  res.render("about_me", {
+    title:res.locals.title,
+    notice:res.locals.notice,
+  })
+})
+
 router.get("/diary", function (req, res, next) {
   const query = "SELECT * FROM diary_table";
   connection.query(query, (err, rows) => {

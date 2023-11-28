@@ -8,6 +8,7 @@ var expressSession = require("express-session");
 var logger = require("morgan");
 const bcrypt = require("bcrypt");
 const saltRounds = 10; // 솔트 라운드 수
+require("dotenv").config();
 
 var indexRouter = require("./routes/index");
 var usersRouter = require("./routes/users");

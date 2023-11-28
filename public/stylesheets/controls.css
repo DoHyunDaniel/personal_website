@@ -100,5 +100,5 @@ padding-top:10px;
   .md-textbox_textarea > :is(textarea:focus, .has-value) ~ label {
     background: #010101;
     color: white;
-    translate: 0 -44px;
+    translate: 0 -48px;
   }

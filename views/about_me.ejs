@@ -1,11 +1,13 @@
+<!DOCTYPE html>
+<html>
+
 <head>
   <title>
     <%= title %>
   </title>
   <link rel='stylesheet' href='/stylesheets/layout.css' />
   <link rel='stylesheet' href='/stylesheets/buttons.css' />
-  <link rel='stylesheet' href='/stylesheets/index_body.css' />
-  <link rel='stylesheet' href='/stylesheets/diary_list_body.css' />
+  <link rel='stylesheet' href='/stylesheets/about_me.css' />
   <!--웹폰트2-->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -14,18 +16,16 @@
 
 </head>
 
-<%- include ('header') %>
+<body>
+  <%- include ('header') %>
 
-  <body>
     <container id="body_layout_container">
       <%- include ('body_list') %>
-        <%- include ('bodies/diary_list_body') %>
-
+        <%- include ('bodies/about_me_body') %>
     </container>
-    <div id="buttons_container">
-      <button id="footer_button_1st"><a href="/create" style="color:whitesmoke">글쓰기</a></button>
-    </div>
-  </body>
+</body>
+<%- include ('footer') %>
 
+<script src="/javascripts/body.js"></script>
 
-  <%- include ('footer') %>
+</html>

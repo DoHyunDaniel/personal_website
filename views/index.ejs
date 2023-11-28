@@ -16,9 +16,9 @@
 
 </head>
 
-<%- include ('header') %>
+<body>
+  <%- include ('header') %>
 
-  <body>
     <container id="body_layout_container">
       <%- include ('body_list') %>
         <%- include ('bodies/index_body') %>
@@ -26,8 +26,8 @@
     <div id="buttons_container">
       <button id="footer_button_1st"><a href="/create" style="color:whitesmoke">글쓰기</a></button>
     </div>
-  </body>
-
-  <script src="/javascripts/body.js"></script>
+</body>
+<%- include ('footer') %>
+<script src="/javascripts/body.js"></script>
 
 </html>

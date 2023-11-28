@@ -1,5 +1,31 @@
+
+
+/*로딩 이미지*/
+#load_div {
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  position: fixed;
+  display: block;
+  opacity: 1;
+  background: black;
+  z-index: 9999;
+  text-align: center;
+}
+#load_div > img {
+  width: 10%;
+  height: auto;
+  position: absolute;
+  top: 40%;
+  left: 45%;
+  z-index: 10000;
+}
+
 /* 최상단 바 */
 .scrollable-div {
+  display: flex;
+  align-items: center;
   text-align: right;
   overflow: hidden; /* 내용을 숨기기 위해 overflow 속성을 hidden으로 설정합니다. */
   white-space: nowrap; /* 텍스트가 줄 바꿈되지 않도록 설정합니다. */
@@ -22,12 +48,12 @@
 #header_nav {
   position: fixed;
   display: grid;
-  grid-template-columns: 0.7fr 13fr 0.9fr ;
+  grid-template-columns: 1fr 13fr 0.9fr;
   align-content: center;
   justify-content: center;
-  gap: 16px;
+  gap: 12px;
   padding: 0 20px;
-  z-index: 2;
+  z-index: 1000;
   top: 0;
   left: 0;
   width: 100%;
@@ -56,9 +82,169 @@ nav {
   background: #2b2836;
 }
 
-.login_div{
+.login_div {
   display: flex;
 }
+
+/*헤더 디자인*/
+a{
+  color:#252830;
+}
+.slider {
+  width: 100%;
+  height: 100vh;
+}
+.slider .items-group {
+  width: 100%;
+  height: 100%;
+  position: relative;
+}
+.slider .items-group .item {
+  top: 0px;
+  left: 0px;
+  opacity: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  overflow: hidden;
+  transition: 0.5s;
+  visibility: hidden;
+  position: relative;
+  padding: 50px 20px;
+  position: absolute;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+}
+.slider .items-group .item:hover .bg {
+  opacity: 0.2;
+}
+.slider .items-group .item:hover .block {
+  box-shadow: 0px 0px 50px #333;
+}
+.slider .items-group .item.active {
+  opacity: 1;
+  visibility: visible;
+}
+.slider .items-group .item .bg {
+  top: 0px;
+  left: 0px;
+  opacity: 1;
+  z-index: -1;
+  width: 100%;
+  height: 100%;
+  transition: 0.5s;
+  position: absolute;
+  transform: scale(1.03);
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed;
+}
+.slider .items-group .item .blur {
+  top: 0px;
+  left: 0px;
+  z-index: -1;
+  width: 100%;
+  height: 100%;
+  transition: 0.5s;
+  filter: blur(20px);
+  position: absolute;
+  transform: scale(1.03);
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed;
+}
+.slider .items-group .item .block {
+  width: 100%;
+  height: 100%;
+  padding: 20px;
+  color: #ffffff;
+  transition: box-shadow 0.5s;
+  max-width: 300px;
+  overflow: hidden;
+  max-height: 450px;
+  border-radius: 10px;
+  transform: scale(1.03);
+  box-sizing: border-box;
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed;
+  box-shadow: none;
+}
+.slider .items-group .item .block .circleLight {
+  top: 0px;
+  left: 0px;
+  opacity: 0;
+  content: "";
+  width: 100%;
+  height: 100%;
+  display: block;
+  transition: 0.5s;
+  position: absolute;
+  border-radius: 10px;
+  background: radial-gradient(circle at 80px 40px, #fff, transparent);
+}
+.slider .items-group .item .block .text {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  text-align: center;
+  flex-direction: column;
+  justify-content: center;
+  background-position: center;
+  background-attachment: fixed;
+}
+.slider .items-group .item .block h2 {
+  font-family: "Oswald", sans-serif;
+  font-size: 130px;
+  margin-bottom: 0px;
+}
+.slider .items-group .item .block p {
+  font-family: "Open Sans", sans-serif;
+  font-size: 15px;
+}
+.slider .items-group .item .block:hover {
+  box-shadow: 0px 0px 70px #111;
+}
+.slider .items-group .item .block:hover .circleLight {
+  opacity: 0.4;
+}
+.slider .navigations {
+  bottom: 0px;
+  width: 100%;
+  position: absolute;
+}
+.slider .navigations .dots {
+  height: 20px;
+  padding: 10px 0px;
+  text-align: center;
+}
+.slider .navigations .dots li {
+  width: 10px;
+  height: 10px;
+  cursor: pointer;
+  transition: 0.3s;
+  background: #fff;
+  border-radius: 50%;
+  display: inline-block;
+  vertical-align: middle;
+}
+.slider .navigations .dots li + li {
+  margin-left: 10px;
+}
+.slider .navigations .dots li:hover {
+  filter: blur(2px);
+}
+.slider .navigations .dots li.active {
+  width: 15px;
+  height: 15px;
+}
+.slider .navigations .dots li.active:hover {
+  filter: blur(0px);
+}
+
+
+/* 
 #header_grid_container {
   display: grid;
   grid-template-rows: auto auto;
@@ -69,21 +255,9 @@ nav {
   text-align: center;
   font-size: 1.5rem;
   position: relative;
+
 }
-/* .title::after {
-  position: absolute;
-  content: "";
-  width: 0%;
-  height: 4px;
-  background-color: whitesmoke;
-  left: 50%;
-  bottom: 30px;
-  transition: all 0.4s ease-in-out;
-}
-.title:hover::after {
-  width: 120%;
-  left: -10%;
-} */
+
 #title {
   align-self: end;
 }
@@ -172,14 +346,17 @@ a {
 }
 
 header {
-  height: 280px;
+  width: 100%;
+  height: 310px;
   margin: 0;
   padding: 0 20px;
   font-weight: 400;
-  background: linear-gradient(-45deg, #f8e9a1, #f76c6c, #a8d0e6, #374785,#243052);
+  background: linear-gradient(-45deg,  #f8e9a1, #f76c6c, #a8d0e6, #374785,#243052);
   background-size: 400% 400%;
   animation: gradient 15s ease infinite;
 }
+
+
 
 @keyframes gradient {
   0% {
@@ -199,5 +376,7 @@ header {
   width: 100%;
   height: 100%;
   justify-items: center;
-}
 
+
+}
+ */

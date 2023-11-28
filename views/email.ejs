@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>메일 서버</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" type="text/css" src="/css/mail.css" />
+    <script defer type="text/javascript" src="/javascriptss/mailform.js"></script>
+  </head>
+  <body>
+    <main>
+      <header><h2>메일 보내기</h2></header>
+      <form name="mailForm" method="post" id="mail_form">
+        <input
+          class="input username"
+          id="username"
+          name="username"
+          type="text"
+          placeholder="userName"
+        /><br />
+
+        <input
+          class="input email"
+          id="email"
+          name="email"
+          type="email"
+          placeholder="email"
+        /><br />
+
+        <input
+          class="input subject"
+          id="subject"
+          name="subject"
+          type="text"
+          placeholder="메일 제목"
+        /><br />
+
+        <textarea
+          class="textarea message"
+          id="message"
+          name="message"
+          placeholder="메일 내용"
+          rows="5"
+          cols="30"
+        ></textarea
+        ><br />
+        <input type="submit" class="submit" value="메일 보내기" />
+      </form>
+
+      <span>
+        <h3>메세지 전송상태</h3>
+        <input
+          type="text"
+          class="status_space"
+          value="메일 전송 현 상태...."
+          readonly
+        />
+      </span>
+    </main>
+  </body>
+</html>

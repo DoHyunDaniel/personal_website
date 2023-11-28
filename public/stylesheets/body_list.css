@@ -24,9 +24,8 @@ button {
   top: 56px;
 }
 .sidebar {
-  z-index: 1;
   width: 200px;
-  height: 120%;
+  height: 100%;
   background: #252830;
   transition: width 0.4s;
 }
