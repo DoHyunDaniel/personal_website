@@ -4,7 +4,7 @@
   "private": false,
   "scripts": {
     "start": "nodemon ./bin/www",
-    "build":"webpack"
+    "build": "webpack"
   },
   "dependencies": {
     "bcrypt": "^5.1.1",
@@ -26,5 +26,8 @@
   "keywords": [],
   "author": "",
   "license": "ISC",
-  "description": "This is my personal_website made by html5/css/javascript/node.js/express.js"
+  "description": "This is my personal_website made by html5/css/javascript/node.js/express.js",
+  "devDependencies": {
+    "webpack": "^5.89.0"
+  }
 }
