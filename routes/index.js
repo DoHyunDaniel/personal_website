@@ -1,4 +1,5 @@
 var express = require("express");
+var sanitizeHtml = require("sanitize-html");
 var router = express.Router();
 var fs = require("fs");
 const bcrypt = require("bcrypt");
@@ -46,12 +47,12 @@ router.get("/", function (req, res, next) {
   });
 });
 
-router.get("/about_me",function(req,res,next){
+router.get("/about_me", function (req, res, next) {
   res.render("about_me", {
-    title:res.locals.title,
-    notice:res.locals.notice,
-  })
-})
+    title: res.locals.title,
+    notice: res.locals.notice,
+  });
+});
 
 router.get("/diary", function (req, res, next) {
   const query = "SELECT * FROM diary_table";
@@ -139,14 +140,40 @@ router.post(
     }
     console.log("File upload Successful!");
 
+    // HTML 태그를 이스케이프
+    const escapeHtml = (str) => {
+      return str.replace(/[&<>"']/g, (match) => {
+        return {
+          "&": "&amp;",
+          "<": "&lt;",
+          ">": "&gt;",
+          '"': "&quot;",
+          "'": "&#39;",
+        }[match];
+      });
+    };
+
+
     const { create_title, create_text, create_category } = req.body; // 폼에서 전송된 데이터를 읽어옴
 
+    const clean_create_title = sanitizeHtml(escapeHtml(create_title)
+      .replace(/'/g, "''")
+      .replace(/"/g, '\\"'));
+    const clean_create_text = sanitizeHtml(escapeHtml(create_text)
+      .replace(/'/g, "''")
+      .replace(/"/g, '\\"'));
     // title 및 text를 이용하여 diary_table에 새로운 레코드를 삽입
     const query = `INSERT INTO diary_table (diary_title, diary_date, diary_text, diary_category, filename, filepath) 
   VALUES (?, NOW(),?,?,?,?)`;
     connection.query(
       query,
-      [create_title, create_text, create_category, originalname, filePath],
+      [
+        clean_create_title,
+        clean_create_text,
+        create_category,
+        originalname,
+        filePath,
+      ],
       (err, rows) => {
         if (err) {
           throw err;
@@ -247,9 +274,29 @@ router.post(
       newOriginalname = originalname;
     }
     // update_title과 update_text 내의 작은 따옴표를 이스케이프
-    const escapedUpdateTitle = update_title.replace(/'/g, "''");
-    const escapedUpdateText = update_textarea.replace(/'/g, "''");
+    // HTML 태그를 이스케이프
+    const escapeHtml = (str) => {
+      return str.replace(/[&<>"']/g, (match) => {
+        return {
+          "&": "&amp;",
+          "<": "&lt;",
+          ">": "&gt;",
+          '"': "&quot;",
+          "'": "&#39;",
+        }[match];
+      });
+    };
 
+    // 작은따옴표와 큰따옴표 이스케이프
+    const escapedUpdateTitle = escapeHtml(update_title)
+      .replace(/'/g, "''")
+      .replace(/"/g, '\\"');
+    const escapedUpdateText = escapeHtml(update_textarea)
+      .replace(/'/g, "''")
+      .replace(/"/g, '\\"');
+
+    const clean_escapedUpdateTitle = sanitizeHtml(escapedUpdateTitle);
+    const clean_escapedUpdateText = sanitizeHtml(escapedUpdateText);
     const query = `
   UPDATE diary_table
   SET diary_title = ?, diary_text = ?, diary_category = ?,
@@ -258,8 +305,8 @@ router.post(
     connection.query(
       query,
       [
-        escapedUpdateTitle,
-        escapedUpdateText,
+        clean_escapedUpdateTitle,
+        clean_escapedUpdateText,
         update_category,
         newOriginalname,
         newFilePath,
@@ -315,10 +362,11 @@ router.get("/admin_update_form", function (req, res, next) {
 router.post("/update_process_for_admin", function (req, res, next) {
   const { update_title, update_text, update_id, update_category, notice } =
     req.body; // 폼에서 전송된 데이터를 읽어옴
-
+  const clean_update_title = sanitizeHtml(update_title);
+  const clean_update_text = sanitizeHtml(update_text);
   const query = `
   UPDATE diary_table
-  SET diary_title = '${update_title}', diary_text='${update_text}', diary_category = '${update_category}',
+  SET diary_title = '${clean_update_title}', diary_text='${clean_update_text}', diary_category = '${update_category}',
   diary_date_updated = NOW(), notice='${notice}'
   WHERE id = 19;`;
   connection.query(query, (err, rows) => {
@@ -499,11 +547,27 @@ router.get("/visitors_book", function (req, res, next) {
 router.post("/visitors_book_upload_process", function (req, res, next) {
   if (req.session.user) {
     var user = req.session.user.id;
-    const text = req.body.visitors_book_upload_text;
+    // HTML 태그를 이스케이프
+    const escapeHtml = (str) => {
+      return str.replace(/[&<>"']/g, (match) => {
+        return {
+          "&": "&amp;",
+          "<": "&lt;",
+          ">": "&gt;",
+          '"': "&quot;",
+          "'": "&#39;",
+        }[match];
+      });
+    };
+
+    // 작은따옴표와 큰따옴표 이스케이프
+
+    const text = escapeHtml(req.body.visitors_book_upload_text)
+      .replace(/'/g, "''")
+      .replace(/"/g, '\\"');
+    const clean_text = sanitizeHtml(text);
     const query = `INSERT INTO visitor_table(writer, text, date) VALUES(?, ? ,NOW())`;
-    console.log(text)
-    console.log(typeof text)
-    connection.query(query, [user, text], (err, rows) => {
+    connection.query(query, [user, clean_text], (err, rows) => {
       if (err) {
         throw err;
       }
@@ -517,16 +581,16 @@ router.post("/visitors_book_upload_process", function (req, res, next) {
 
 router.post("/visitors_book_delete_process", function (req, res, next) {
   const visitors_book_id = parseInt(req.body.visitors_book_id); // req.body에서 diary_id를 추출
-  console.log(visitors_book_id)
-    const query = `DELETE FROM visitor_table WHERE id = ${visitors_book_id}`;
-    connection.query(query, (err) => {
-      if (err) {
-        throw err;
-      }
+  console.log(visitors_book_id);
+  const query = `DELETE FROM visitor_table WHERE id = ${visitors_book_id}`;
+  connection.query(query, (err) => {
+    if (err) {
+      throw err;
+    }
 
-      // 삭제가 성공하면 다른 페이지로 리다이렉트 또는 메시지를 표시
-      res.redirect("/visitors_book??page=1"); // 홈페이지로 리다이렉트
-    });
+    // 삭제가 성공하면 다른 페이지로 리다이렉트 또는 메시지를 표시
+    res.redirect("/visitors_book??page=1"); // 홈페이지로 리다이렉트
   });
+});
 
 module.exports = router;
