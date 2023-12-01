@@ -28,6 +28,7 @@
   "license": "ISC",
   "description": "This is my personal_website made by html5/css/javascript/node.js/express.js",
   "devDependencies": {
-    "webpack": "^5.89.0"
+    "webpack": "^5.89.0",
+    "webpack-cli": "^5.1.4"
   }
 }
