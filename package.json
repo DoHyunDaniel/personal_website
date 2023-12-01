@@ -26,5 +26,8 @@
   "keywords": [],
   "author": "DohyunDaniel",
   "license": "ISC",
-  "description": "This is my personal_website made by html5/css/javascript/node.js/express.js"
+  "description": "This is my personal_website made by html5/css/javascript/node.js/express.js",
+  "devDependencies": {
+    "parcel-bundler": "^1.12.5"
+  }
 }

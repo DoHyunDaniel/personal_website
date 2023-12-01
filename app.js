@@ -1,7 +1,6 @@
 var createError = require("http-errors");
 var express = require("express");
 var http = require("http");
-var https = require("https");
 var path = require("path");
 var cookieParser = require("cookie-parser");
 var bodyParser = require("body-parser");
@@ -15,6 +14,7 @@ var indexRouter = require("./routes/index");
 var usersRouter = require("./routes/users");
 
 var app = express();
+
 
 // 미들웨어 설정 부분(다른 곳에 넣으면 실행이 안 됨!!)
 app.use(function (req, res, next) {
@@ -66,7 +66,6 @@ app.use(
     cookie: { maxAge: 18000000 /*secure: true*/ },
   })
 );
-
 
 app.get("/users/login_process", (req, res) => {
   if (req.session.user) {
