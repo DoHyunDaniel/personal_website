@@ -1,7 +1,7 @@
 module.exports ={
-    host: "127.0.0.1",
-    user: "diary_user",
-    password: "diary",
-    database: "diarydb",
+    host: process.env.DB_HOST,
+    user: process.env.DB_USER,
+    password: process.env.DB_PASSWORD,
+    database: process.env.DB,
     charset:"utf8mb4",
 };
