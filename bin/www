@@ -5,7 +5,7 @@
  */
 
 var fs = require("fs");
-var app = require("../app");
+var app = require("../app.js");
 var debug = require("debug")("backend:server");
 var http = require("http");
 var https = require("https");
