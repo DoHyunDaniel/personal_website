@@ -18,7 +18,7 @@ const options = {
   cert: fs.readFileSync("./config/cert.crt"),
 };
 
-var port = normalizePort(process.env.PORT || "3000");
+var port = normalizePort(process.env.PORT || "8088");
 app.set("port", port);
 
 /**
