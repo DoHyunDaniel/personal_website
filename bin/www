@@ -8,36 +8,37 @@ var fs = require("fs");
 var app = require("../app.js");
 var debug = require("debug")("backend:server");
 var http = require("http");
-var https = require("https");
+// var https = require("https");
 /**
  * Get port from environment and store in Express.
  */
 
-const options = {
-  key: fs.readFileSync("./config/cert.key"),
-  cert: fs.readFileSync("./config/cert.crt"),
-};
+// const options = {
+//   key: fs.readFileSync("./config/cert.key"),
+//   cert: fs.readFileSync("./config/cert.crt"),
+// };
 
-var port = normalizePort(process.env.PORT || "8080");
+var port = normalizePort(process.env.PORT || "8088");
 app.set("port", port);
 
-// /**
-//  * Create HTTP server.
-//  */
+/**
+ * Create HTTP server.
+ */
 
-// var server = http.createServer(app);
+var server = http.createServer(app);
 
 /**
  * Listen on provided port, on all network interfaces.
-*/
-// https 의존성으로 certificate와 private key로 새로운 서버를 시작
-server = https.createServer(options, app).listen(port, () => {
-  console.log(`HTTPS server started on port 8080`);
-});
+ */
 
+server.listen(port);
 server.on("error", onError);
 server.on("listening", onListening);
 
+// // https 의존성으로 certificate와 private key로 새로운 서버를 시작
+// https.createServer(options, app).listen(8080, () => {
+//   console.log(`HTTPS server started on port 8080`);
+// });
 
 /**
  * Normalize a port into a number, string, or false.

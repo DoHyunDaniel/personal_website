@@ -4,6 +4,8 @@ backend/node_modules/
 # Edit at https://www.toptal.com/developers/gitignore?templates=node
 
 ca.crt
+config/cert.crt
+config/cert.key
 
 ### Node ###
 # Logs
