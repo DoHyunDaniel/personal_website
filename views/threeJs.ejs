@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>
+    <%= title %>
+  </title>
+  <link rel='stylesheet' href='/stylesheets/layout.css' />
+  <link rel='stylesheet' href='/stylesheets/buttons.css' />
+  <!--웹폰트2-->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Sunflower:wght@300&display=swap" rel="stylesheet">
+
+
+</head>
+
+<body>
+  <%- include ('header') %>
+
+    <container id="body_layout_container">
+      <%- include ('body_list') %>
+        <%- include ('bodies/threeJs_body') %>
+    </container>
+</body>
+<%- include ('footer') %>
+
+<script src="/javascripts/body.js"></script>
+
+</html>

@@ -593,4 +593,11 @@ router.post("/visitors_book_delete_process", function (req, res, next) {
   });
 });
 
+router.get("/threeJs", function (req, res, next) {
+  res.render("threeJs", {
+    title: res.locals.title,
+    notice: res.locals.notice,
+  });
+});
+
 module.exports = router;
