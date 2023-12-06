@@ -1,6 +1,6 @@
-import * as THREE from 'https://cdn.skypack.dev/three@0.129.0/build/three.module.js';
-import { OrbitControls } from 'https://cdn.skypack.dev/three@0.129.0/examples/jsm/controls/OrbitControls.js';
-import { GLTFLoader } from 'https://cdn.skypack.dev/three@0.129.0/examples/jsm/loaders/GLTFLoader.js';
+import * as THREE from "https://cdn.skypack.dev/three@0.129.0/build/three.module.js";
+import { OrbitControls } from "https://cdn.skypack.dev/three@0.129.0/examples/jsm/controls/OrbitControls.js";
+import { GLTFLoader } from "https://cdn.skypack.dev/three@0.129.0/examples/jsm/loaders/GLTFLoader.js";
 
 // export function init() {
 //   const container = document.getElementById("container");
@@ -27,12 +27,12 @@ let PLight = new THREE.PointLight();
 let ALight = new THREE.AmbientLight();
 let SLight = new THREE.SpotLight("white", 5, 60, Math.PI * 0.2, 1, 1);
 
-SLight.position.set(0,5,10);
+SLight.position.set(0, 5, 10);
 
 ALight.intensity = 5;
 PLight.position.set(0, 50, 50);
 PLight.intensity = 5;
-scene.add(PLight, ALight,SLight);
+scene.add(PLight, ALight, SLight);
 
 const renderer = new THREE.WebGLRenderer({
   canvas: document.querySelector("#canvas"),
@@ -61,10 +61,10 @@ controls.enableZoom = true; // 줌 기능 활성화
 // 이벤트 리스너를 추가하여 마우스 휠로 줌 인/아웃을 할 수 있도록 합니다.
 renderer.domElement.addEventListener("wheel", function (event) {
   const deltaY = event.deltaY;
-  const maxZoom = 10; // 최대 줌 인 값
-  const minZoom = 5; // 최소 줌 아웃 값
+  const maxZoom = 30; // 최대 줌 인 값
+  const minZoom = 2; // 최소 줌 아웃 값
   // 카메라의 z 위치를 조정하여 줌 인/아웃 효과를 줍니다.
-  if (camera.position.z >= minZoom && camera.position.z <= maxZoom) {
+  if (deltaY !== 0) {
     camera.position.z += deltaY * 0.05; // 마우스 휠 방향에 따라 카메라의 z 위치를 조정
     // 카메라의 위치가 최소/최대 값을 넘지 않도록 조정합니다.
     camera.position.z = THREE.MathUtils.clamp(
