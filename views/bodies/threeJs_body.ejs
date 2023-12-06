@@ -10,6 +10,23 @@
         <h4 style="display: flex; flex-direction: column; margin:20px;">
             <span>gltfLoader, OrbitControls, texture 등의 기능을 통해 렌더링된 3d 제작물(gltf,obj 등)을 웹에 표시할 수 있습니다.</span>
         </h4>
+        <container style="position: absolute; top:40vh; left:80vw; user-select: none;">
+            <div
+                style="width: 250px; height:85px; align-items: center; display: grid; grid-template-columns: 0.3fr 2fr; grid-template-rows: 1fr 1fr 1fr;">
+                <span class="material-symbols-outlined">
+                    drag_click
+                </span>
+                <p style="margin:0; font-size:12px;">drag</p>
+                <span class="material-symbols-outlined">
+                    zoom_in
+                </span>
+                <p style="margin:0; font-size:12px;">wheel up to zoom in</p>
+                <span class="material-symbols-outlined">
+                    zoom_out
+                </span>
+                <p style="margin:0; font-size:12px;">wheel down to zoom out</p>
+                </div>
+        </container>
         <script type="module" src="/javascripts/threeJs_body.js"></script>
         <canvas id="canvas" style="max-width: 80vw;"></canvas>
     </container>
