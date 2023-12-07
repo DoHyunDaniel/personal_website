@@ -1,5 +1,5 @@
 module.exports ={
-    host: "localhost",
+    host: "mariadb",
     user: "diary_user",
     password: "diary",
     database: "diarydb",
